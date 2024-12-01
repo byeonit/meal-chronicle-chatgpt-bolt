@@ -44,5 +44,9 @@ testem.log
 Thumbs.db
 
 # Environment files
+# Ignore all .ts files in the environments folder
 /src/environments/*.ts
+
+# Explicitly allow environment files that are needed
 !/src/environments/environment.ts
+!/src/environments/environment.development.ts
