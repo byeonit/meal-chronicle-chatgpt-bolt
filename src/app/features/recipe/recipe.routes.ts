@@ -6,5 +6,11 @@ export const RECIPE_ROUTES: Routes = [
     loadComponent: () => 
       import('./components/recipe-generator/recipe-generator.component')
         .then(m => m.RecipeGeneratorComponent)
+  },
+  {
+    path: 'list',
+    loadComponent: () =>
+      import('./components/recipe-list/recipe-list.component')
+        .then(m => m.RecipeListComponent)
   }
 ];

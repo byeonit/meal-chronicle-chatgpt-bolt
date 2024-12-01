@@ -1,21 +1,28 @@
 import { Injectable } from '@angular/core';
 import { FirebaseService } from './firebase.service';
-import { getFirestore, collection, addDoc, getDocs } from 'firebase/firestore';
+import { 
+  getFirestore, 
+  collection, 
+  addDoc, 
+  getDocs, 
+  query, 
+  where,
+  orderBy 
+} from 'firebase/firestore';
 import { Observable, from } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { Recipe } from '../models/recipe.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecipeService {
   private db;
-  private readonly apiUrl = environment.apiUrl;
 
   constructor(private firebaseService: FirebaseService) {
     this.db = getFirestore(this.firebaseService.getApp());
   }
 
-  async saveRecipe(recipe: any): Promise<string> {
+  async saveRecipe(recipe: Partial<Recipe>): Promise<string> {
     try {
       const docRef = await addDoc(collection(this.db, 'recipes'), recipe);
       return docRef.id;
@@ -25,13 +32,37 @@ export class RecipeService {
     }
   }
 
-  getRecipes(): Observable<any[]> {
+  getUserRecipes(userId: string): Observable<Recipe[]> {
     return from(
-      getDocs(collection(this.db, 'recipes'))
-        .then(snapshot => snapshot.docs.map(doc => ({
+      getDocs(
+        query(
+          collection(this.db, 'recipes'),
+          where('userId', '==', userId),
+          orderBy('createdAt', 'desc')
+        )
+      ).then(snapshot => 
+        snapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
-        })))
+        } as Recipe))
+      )
+    );
+  }
+
+  getRecentRecipes(): Observable<Recipe[]> {
+    return from(
+      getDocs(
+        query(
+          collection(this.db, 'recipes'),
+          orderBy('createdAt', 'desc'),
+          where('status', '==', 'generated')
+        )
+      ).then(snapshot =>
+        snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        } as Recipe))
+      )
     );
   }
 }
