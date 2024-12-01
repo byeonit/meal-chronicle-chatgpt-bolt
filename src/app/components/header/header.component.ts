@@ -32,7 +32,7 @@ import { MatIconModule } from '@angular/material/icon';
             <mat-icon>cloud</mat-icon>
             Firebase Test
           </a>
-          <a mat-button routerLink="/favorites" routerLinkActive="active">
+          <a mat-button>
             <mat-icon>favorite</mat-icon>
             Favorites
           </a>
