@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RecipeFormComponent } from './recipe-form/recipe-form.component';
 import { MatCardModule } from '@angular/material/card';
+import { RecipeService } from '../../../../core/services/recipe.service';
 
 @Component({
   selector: 'app-recipe-generator',
@@ -21,7 +22,20 @@ import { MatCardModule } from '@angular/material/card';
   `
 })
 export class RecipeGeneratorComponent {
-  onGenerate(ingredients: string[]) {
-    console.log('Generating recipe with ingredients:', ingredients);
+  constructor(private recipeService: RecipeService) {}
+
+  async onGenerate(ingredients: string[]) {
+    try {
+      const recipe = {
+        ingredients,
+        createdAt: new Date(),
+        status: 'pending'
+      };
+      
+      const recipeId = await this.recipeService.saveRecipe(recipe);
+      console.log('Recipe saved with ID:', recipeId);
+    } catch (error) {
+      console.error('Error generating recipe:', error);
+    }
   }
 }
