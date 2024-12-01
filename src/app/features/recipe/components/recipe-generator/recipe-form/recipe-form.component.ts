@@ -9,7 +9,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { startWith, switchMap } from 'rxjs/operators';
-import { IngredientService } from '../../../services/ingredient.service';
+import { IngredientService } from '../../../../../core/services/ingredient.service';
+import { IngredientDocument } from '../../../../../core/models/ingredient.model';
 
 @Component({
   selector: 'app-recipe-form',
@@ -78,27 +79,33 @@ import { IngredientService } from '../../../services/ingredient.service';
   }
 })
 export class RecipeFormComponent {
-  @Output() generate = new EventEmitter<string[]>();
+  @Output() generate = new EventEmitter<string[]>();  // Emits the final list of ingredients for recipe generation
   
-  ingredients$ = new BehaviorSubject<string[]>([]);
-  ingredientCtrl = new FormControl('');
-  filteredIngredients$: Observable<string[]>;
+  ingredients$ = new BehaviorSubject<string[]>([]); // BehaviorSubject to track the ingredients list
+  ingredientCtrl = new FormControl(''); // FormControl for ingredient input
+  filteredIngredients$: Observable<string[]>; // Observable for filtered ingredient suggestions
 
-  constructor(private ingredientService: IngredientService) {
+  constructor(private ingredientService: IngredientService) {    
     this.filteredIngredients$ = this.ingredientCtrl.valueChanges.pipe(
       startWith(''),
-      switchMap(value => this.ingredientService.searchIngredients(value || ''))
+      switchMap((value) =>
+        value ? this.ingredientService.searchIngredients(value) : new Observable<string[]>((observer) => {
+          observer.next([]);
+          observer.complete();
+        })
+      )
     );
   }
 
+  /**
+   * Add the currently entered ingredient to the list
+   */
   addIngredient(): void {
     const value = this.ingredientCtrl.value?.trim();
-    if (value) {
-      const currentIngredients = this.ingredients$.getValue();
-      if (!currentIngredients.includes(value)) {
-        this.ingredients$.next([...currentIngredients, value]);
-        this.ingredientCtrl.setValue('');
-      }
+    if (value && !this.ingredients$.getValue().includes(value)) {
+      const updatedIngredients = [...this.ingredients$.getValue(), value];
+      this.ingredients$.next(updatedIngredients); // Update the BehaviorSubject
+      this.ingredientCtrl.setValue(''); // Clear the input field
     }
   }
 
@@ -111,14 +118,18 @@ export class RecipeFormComponent {
     }
   }
 
+  /**
+   * Remove an ingredient from the list
+   */
   removeIngredient(ingredient: string): void {
-    const currentIngredients = this.ingredients$.getValue();
-    const updatedIngredients = currentIngredients.filter(item => item !== ingredient);
-    this.ingredients$.next(updatedIngredients);
+    const updatedIngredients = this.ingredients$.getValue().filter((item) => item !== ingredient);
+    this.ingredients$.next(updatedIngredients); // Update the BehaviorSubject
   }
 
+  /**
+   * Emit the current ingredients list when generating the recipe
+   */
   onGenerateClick(): void {
-    const currentIngredients = this.ingredients$.getValue();
-    this.generate.emit(currentIngredients);
+    this.generate.emit(this.ingredients$.getValue()); // Emit the current list of ingredients
   }
 }
