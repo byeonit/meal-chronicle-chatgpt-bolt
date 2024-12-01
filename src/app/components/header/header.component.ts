@@ -16,17 +16,21 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule
   ],
   template: `
-    <mat-toolbar color="primary" class="header">
+    <mat-toolbar color="primary">
       <div class="header-content">
         <div class="logo-section">
           <mat-icon>restaurant_menu</mat-icon>
           <a routerLink="/" class="logo-text">MealChronicle</a>
         </div>
         
-        <nav class="nav-links">
+        <nav>
           <a mat-button routerLink="/recipes" routerLinkActive="active">
             <mat-icon>book</mat-icon>
             Recipes
+          </a>
+          <a mat-button routerLink="/firebase-test" routerLinkActive="active">
+            <mat-icon>cloud</mat-icon>
+            Firebase Test
           </a>
           <a mat-button routerLink="/favorites" routerLinkActive="active">
             <mat-icon>favorite</mat-icon>
@@ -35,67 +39,6 @@ import { MatIconModule } from '@angular/material/icon';
         </nav>
       </div>
     </mat-toolbar>
-  `,
-  styles: [`
-    .header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-    }
-
-    .header-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 16px;
-    }
-
-    .logo-section {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .logo-text {
-      font-size: 1.5rem;
-      font-weight: 500;
-      text-decoration: none;
-      color: white;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 16px;
-    }
-
-    .nav-links a {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .active {
-      background-color: rgba(255, 255, 255, 0.1);
-    }
-
-    @media (max-width: 600px) {
-      .logo-text {
-        font-size: 1.2rem;
-      }
-
-      .nav-links {
-        gap: 8px;
-      }
-
-      .nav-links a {
-        padding: 0 8px;
-      }
-    }
-  `]
+  `
 })
 export class HeaderComponent {}
