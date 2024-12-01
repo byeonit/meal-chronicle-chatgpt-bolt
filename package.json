@@ -17,6 +17,7 @@
     "@angular/platform-browser": "^18.2.7",
     "@angular/platform-browser-dynamic": "^18.2.7",
     "@angular/router": "^18.2.7",
+    "firebase": "^10.6.0",
     "rxjs": "^7.8.1",
     "tslib": "^2.6.2",
     "zone.js": "~0.14.2"
@@ -30,6 +31,7 @@
     "@angular-eslint/eslint-plugin-template": "^18.2.7",
     "@angular-eslint/schematics": "^18.2.7",
     "@angular-eslint/template-parser": "^18.2.7",
+    "@types/firebase": "^3.2.1",
     "eslint": "^8.51.0",
     "prettier": "^3.0.3",
     "typescript": "~5.5.0"
