@@ -3,9 +3,23 @@
 html, body {
   height: 100%;
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 body {
-  background-color: #f5f5f5;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #fafafa;
+}
+
+.mat-form-field-full-width {
+  width: 100%;
+}
+
+.mat-action-row {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px 0;
+}
+
+.mat-typography {
+  margin: 16px;
 }
