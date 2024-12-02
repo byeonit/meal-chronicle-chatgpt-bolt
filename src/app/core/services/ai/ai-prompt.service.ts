@@ -12,5 +12,5 @@ export class AiPromptService {
     const ingredientList = ingredients.join(', ');
     return `Create a recipe for a ${mealType} using the following ingredients: ${ingredientList}. Skill level required: ${skillLevel}.`;
   }
-
+  
 }
