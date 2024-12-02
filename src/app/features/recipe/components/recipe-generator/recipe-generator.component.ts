@@ -4,6 +4,7 @@ import { RecipeFormComponent } from './recipe-form/recipe-form.component';
 import { MatCardModule } from '@angular/material/card';
 import { RecipeService } from '../../../../core/services/recipe.service';
 import { Recipe } from '../../../../core/models/recipe.model';
+import { RecipeFilters } from '../../../../core/models/recipe-filters.model';
 
 @Component({
   selector: 'app-recipe-generator',
@@ -18,23 +19,24 @@ import { Recipe } from '../../../../core/models/recipe.model';
         <app-recipe-form (generate)="onGenerate($event)"></app-recipe-form>
       </mat-card-content>
     </mat-card>
-  `
+  `,
 })
 export class RecipeGeneratorComponent {
   constructor(private recipeService: RecipeService) {}
 
-  async onGenerate(ingredients: string[]) {
-    try {
-      const recipe: Partial<Recipe> = {
-        ingredients,
-        createdAt: new Date(),
-        status: 'pending' as const
-      };
-      
-      const recipeId = await this.recipeService.saveRecipe(recipe);
-      console.log('Recipe saved with ID:', recipeId);
-    } catch (error) {
-      console.error('Error generating recipe:', error);
-    }
+  onGenerate(filters: RecipeFilters) {
+    console.log('Filters passed to getRecipes:', filters);
+    this.recipeService.getRecipes(filters).subscribe({
+      next: (recipes) => {
+        console.log('Filtered recipes:', recipes);
+       if (recipes.length === 0) {
+          console.log('No recipes found for the given filters.');
+        }
+        // Handle the filtered recipes (e.g., display them in the UI)
+      },
+      error: (error) => {
+        console.error('Error fetching recipes:', error);
+      },
+    });
   }
 }
