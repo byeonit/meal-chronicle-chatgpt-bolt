@@ -124,5 +124,5 @@ This project was generated with Angular CLI version 18.1.0.
 5. Create a new Pull Request
 
 ## Documentation
-For detailed guides and the project roadmap, visit our [Wiki](https://github.com/<repo-owner>/meal-chronicle/wiki).
+For detailed guides and the project roadmap, visit our [Wiki](https://github.com/byeonit/meal-chronicle-chatgpt-bolt/wiki).
 
