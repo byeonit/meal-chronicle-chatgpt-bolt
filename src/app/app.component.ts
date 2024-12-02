@@ -4,8 +4,8 @@ import { HeaderComponent } from './components/header/header.component';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, HeaderComponent],
+  standalone: false,
+  //imports: [RouterOutlet, HeaderComponent],
   template: `
     <app-header></app-header>
     <div class="app-container">
