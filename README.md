@@ -1,40 +1,59 @@
-# MealChronicle
+# AngularMaterialApp
 
-MealChronicle is an AI-powered WebApp designed to generate personalized recipes based on user inputs.
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.2.
 
-## Setup Instructions
+## Development server
 
-1. Clone the repository
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the development server:
-   ```bash
-   ng serve
-   ```
-4. Open your browser and navigate to `http://localhost:4200`
+To start a local development server, run:
 
-## Features
+```bash
+ng serve
+```
 
-- Recipe generation based on available ingredients
-- Modern, responsive UI
-- Modular architecture for scalability
+Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Development
+## Code scaffolding
 
-This project was generated with Angular CLI version 18.1.0.
+Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
 
-### Project Structure
+```bash
+ng generate component component-name
+```
 
-- `src/app/features/recipe` - Recipe module and components
-- `src/app/shared` - Shared components and utilities
-- `src/app/core` - Core services and guards
+For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
 
-## Contributing
+```bash
+ng generate --help
+```
 
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a new Pull Request
+## Building
+
+To build the project run:
+
+```bash
+ng build
+```
+
+This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+
+## Running unit tests
+
+To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+
+```bash
+ng test
+```
+
+## Running end-to-end tests
+
+For end-to-end (e2e) testing, run:
+
+```bash
+ng e2e
+```
+
+Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+
+## Additional Resources
+
+For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
