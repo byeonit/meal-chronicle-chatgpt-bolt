@@ -19,6 +19,12 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/recipe/components/firebase-test/firebase-test.component')
         .then(m => m.FirebaseTestComponent)
+  },
+  {
+    path: 'firebase-test-recipe',
+    loadComponent: () =>
+      import('./features/recipe/components/firebase-test/firebase-test-recipe.component')
+        .then(m => m.FirebaseTestRecipeComponent)
   }
 ];
 

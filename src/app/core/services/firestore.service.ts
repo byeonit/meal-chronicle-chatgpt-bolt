@@ -20,6 +20,8 @@ import { IngredientDocument, IngredientData } from '../models/ingredient.model';
 export class FirestoreService {
   private db;
 
+  //constructor(private firestore: AngularFirestore) {}
+
   constructor(private firebaseService: FirebaseService) {
     this.db = getFirestore(this.firebaseService.getApp());
   }
