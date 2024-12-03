@@ -9,9 +9,12 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { environment } from '../environments/environment';
 
 // Firebase imports
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { RecipeFeedbackService } from './core/services/firestore/recipe-feedback.service';
 
 @NgModule({
   declarations: [
@@ -22,9 +25,12 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
     AppRoutingModule,
     RouterModule,
     FormsModule,
-    HeaderComponent
+    HeaderComponent,
+    AngularFireModule.initializeApp(environment.firebase), // Firebase initialization
+    AngularFirestoreModule, // Firestore module
   ],
   providers: [
+    RecipeFeedbackService,
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
     provideAnimationsAsync()
   ],

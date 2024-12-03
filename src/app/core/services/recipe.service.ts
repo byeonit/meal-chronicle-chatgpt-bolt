@@ -23,12 +23,17 @@ export class RecipeService {
   }
 
   getRecipes(filters: RecipeFilters): Observable<Recipe[]> {
+    console.log("****************************");
+    console.log("getRecipes = " + filters);
     let query = this.firestore.collection<Recipe>('recipes');
 
+    console.log("getRecipes query = " + query);
+    console.log("getRecipes filters.ingredients?.length = " + filters.ingredients?.length);
     if (filters.ingredients?.length) {
       query = this.firestore.collection<Recipe>('recipes', ref =>
         ref.where('ingredients', 'array-contains-any', filters.ingredients)
       );
+      console.log("getRecipes if (filters.ingredients?.length) = " + query);
     }
 
     return query.valueChanges({ idField: 'id' }).pipe(
