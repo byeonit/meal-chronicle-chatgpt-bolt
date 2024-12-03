@@ -13,6 +13,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { RecipeFeedbackService } from './core/services/firestore/recipe-feedback.service';
+import { provideHttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -22,12 +23,13 @@ import { RecipeFeedbackService } from './core/services/firestore/recipe-feedback
     BrowserModule,
     AppRoutingModule,
     RouterModule,
-    FormsModule,
+    FormsModule,    
     HeaderComponent,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule
   ],
   providers: [
+    provideHttpClient(),
     RecipeFeedbackService,
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
     provideAnimationsAsync()

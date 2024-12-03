@@ -60,7 +60,7 @@ import { OllamaRecipeResponse } from '../../../../core/models/ollama-recipe.mode
             <div class="recipe-section">
               <h3>Instructions:</h3>
               <ol>
-                <li *ngFor="let step of recipe.instructions">{{ step }}</li>
+                <li *ngFor="let step of recipe.instructions ">{{ step }}</li>
               </ol>
             </div>
           </div>
@@ -144,13 +144,21 @@ export class OllamaTestComponent {
       mealType: 'dinner',
       skillLevel: 'intermediate'
     };
-
+console.log("request = "+ JSON.stringify(request) )
     this.ollamaService.generateRecipe(request).subscribe({
       next: (response) => {
+        console.log("next value = " + response);
         this.recipe = response;
         this.loading = false;
+      },      
+      complete : () => {
+        console.log("Complete *** " );
       },
       error: (error) => {
+        console.log("error area with " + error);
+        console.log("error area with error.response = " + error.response);
+        console.log("error area with error.request = " + error.request);
+        console.log("error area with error.snackBar = " + error.snackBar);
         this.loading = false;
         this.snackBar.open(
           error.message || 'Error generating recipe. Please try again.',
