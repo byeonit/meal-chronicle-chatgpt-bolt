@@ -92,9 +92,9 @@ interface RecipeFormData {
         <input matInput type="number" formControlName="maxTime" min="0">
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field appearance="outline">
         <mat-label>Skill Level</mat-label>
-        <mat-select formControlName="skillLevel" multiple>
+        <mat-select formControlName="skillLevel">
           <mat-option *ngFor="let level of skillLevels" [value]="level">{{ level }}</mat-option>
         </mat-select>
       </mat-form-field>
