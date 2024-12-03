@@ -2,28 +2,34 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { environment } from '../environments/environment';
+
+// Firebase imports
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-import { environment } from '../environments/environment';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { RecipeFeedbackService } from './core/services/firestore/recipe-feedback.service';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterOutlet,
+    RouterModule,
     FormsModule,
     HeaderComponent,
-    AngularFireModule.initializeApp(environment.firebase), // Firebase initialization
-    AngularFirestoreModule, // Firestore module
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule
   ],
   providers: [
     RecipeFeedbackService,
+    { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
     provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]

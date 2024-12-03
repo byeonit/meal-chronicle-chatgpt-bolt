@@ -10,10 +10,18 @@ import { Component } from '@angular/core';
     </div>
   `,
   styles: [`
+    :host {
+      display: block;
+      min-height: 100vh;
+    }
+
     .app-container {
-      padding: 84px 20px 20px;
+      padding-top: 80px;
+      padding-bottom: var(--spacing-xl);
       max-width: 1200px;
       margin: 0 auto;
+      padding-left: var(--spacing-lg);
+      padding-right: var(--spacing-lg);
     }
   `]
 })

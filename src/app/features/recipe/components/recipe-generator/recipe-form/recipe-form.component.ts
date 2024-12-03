@@ -14,17 +14,12 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { startWith, switchMap } from 'rxjs/operators';
 import { IngredientService } from '../../../../../core/services/ingredient.service';
 import { RecipeFilters } from '../../../../../core/models/recipe-filters.model';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-
-interface RecipeFormData {
-  mealType: string;
-  maxTime: number;
-  skillLevel: string[];
-}
+import { PreparationTimeComponent } from './preparation-time/preparation-time.component';
 
 @Component({
   selector: 'app-recipe-form',
@@ -41,6 +36,7 @@ interface RecipeFormData {
     MatButtonModule,
     MatSelectModule,
     MatCheckboxModule,
+    PreparationTimeComponent
   ],
   template: `
     <form [formGroup]="recipeForm" class="recipe-form">
@@ -80,22 +76,20 @@ interface RecipeFormData {
       <mat-form-field appearance="outline">
         <mat-label>Meal Type</mat-label>
         <mat-select formControlName="mealType">
-          <mat-option value="breakfast">Breakfast</mat-option>
-          <mat-option value="lunch">Lunch</mat-option>
-          <mat-option value="dinner">Dinner</mat-option>
-          <mat-option value="snack">Snack</mat-option>
+          <mat-option *ngFor="let type of mealTypeOptions" [value]="type">
+            {{ type }}
+          </mat-option>
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Maximum Preparation Time (minutes)</mat-label>
-        <input matInput type="number" formControlName="maxTime" min="0">
-      </mat-form-field>
+      <app-preparation-time formControlName="maxTime"></app-preparation-time>
 
       <mat-form-field appearance="outline">
         <mat-label>Skill Level</mat-label>
         <mat-select formControlName="skillLevel">
-          <mat-option *ngFor="let level of skillLevels" [value]="level">{{ level }}</mat-option>
+          <mat-option *ngFor="let level of skillLevels" [value]="level">
+            {{ level }}
+          </mat-option>
         </mat-select>
       </mat-form-field>
 
@@ -112,15 +106,19 @@ interface RecipeFormData {
       </div>
     </form>
   `,
-  styles: [
-    `
+  styles: [`
     .recipe-form {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: var(--spacing-md);
     }
-    `,
-  ],
+
+    .mat-action-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: var(--spacing-md);
+    }
+  `]
 })
 export class RecipeFormComponent {
   @Output() generate = new EventEmitter<RecipeFilters>();
@@ -132,11 +130,7 @@ export class RecipeFormComponent {
   mealTypeOptions: string[] = ['breakfast', 'lunch', 'dinner', 'snack'];
   skillLevels: string[] = ['beginner', 'intermediate', 'expert'];
 
-  recipeForm: FormGroup<{
-    mealType: FormControl<string | null>;
-    maxTime: FormControl<number | null>;
-    skillLevel: FormControl<string[] | null>;
-  }>;
+  recipeForm: FormGroup;
 
   constructor(
     private ingredientService: IngredientService,
@@ -144,8 +138,8 @@ export class RecipeFormComponent {
   ) {
     this.recipeForm = this.fb.group({
       mealType: [''],
-      maxTime: [60],
-      skillLevel: [[] as string[]],
+      maxTime: [30],
+      skillLevel: [[]],
     });
 
     this.filteredIngredients$ = this.ingredientCtrl.valueChanges.pipe(
