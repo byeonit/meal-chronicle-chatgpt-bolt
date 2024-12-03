@@ -2,21 +2,28 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { environment } from '../environments/environment';
+
+// Firebase imports
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-import { environment } from '../environments/environment';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { RecipeFeedbackService } from './core/services/firestore/recipe-feedback.service';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterOutlet,
+    RouterModule,
     FormsModule,
     HeaderComponent,
     AngularFireModule.initializeApp(environment.firebase), // Firebase initialization
@@ -24,6 +31,7 @@ import { RecipeFeedbackService } from './core/services/firestore/recipe-feedback
   ],
   providers: [
     RecipeFeedbackService,
+    { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
     provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]

@@ -1,15 +1,7 @@
 import { Injectable } from '@angular/core';
-import { FirebaseService } from './firebase.service';
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  query,
-  where,
-  orderBy,
-} from 'firebase/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Recipe } from '../models/recipe.model';
 import { RecipeFilters } from '../models/recipe-filters.model';
 
@@ -17,114 +9,57 @@ import { RecipeFilters } from '../models/recipe-filters.model';
   providedIn: 'root',
 })
 export class RecipeService {
-  private db;
-
-  constructor(private firebaseService: FirebaseService) {
-    this.db = getFirestore(this.firebaseService.getApp());
-  }
-
-  async saveRecipe(recipe: Partial<Recipe>): Promise<string> {
-    try {
-      const docRef = await addDoc(collection(this.db, 'recipes'), recipe);
-      return docRef.id;
-    } catch (error) {
-      console.error('Error saving recipe:', error);
-      throw error;
-    }
-  }
-
-  getUserRecipes(userId: string): Observable<Recipe[]> {
-    return new Observable((observer) => {
-      getDocs(
-        query(
-          collection(this.db, 'recipes'),
-          where('userId', '==', userId),
-          orderBy('createdAt', 'desc')
-        )
-      )
-        .then((snapshot) => {
-          const recipes = snapshot.docs.map(
-            (doc) =>
-              ({
-                id: doc.id,
-                ...doc.data(),
-              } as Recipe)
-          );
-          observer.next(recipes);
-          observer.complete();
-        })
-        .catch((error) => observer.error(error));
-    });
-  }
+  constructor(private firestore: AngularFirestore) {}
 
   getRecentRecipes(): Observable<Recipe[]> {
-    return new Observable((observer) => {
-      getDocs(
-        query(
-          collection(this.db, 'recipes'),
-          orderBy('createdAt', 'desc'),
-          where('status', '==', 'generated')
-        )
+    return this.firestore
+      .collection<Recipe>('recipes', ref =>
+        ref
+          .where('status', '==', 'generated')
+          .orderBy('createdAt', 'desc')
+          .limit(10)
       )
-        .then((snapshot) => {
-          const recipes = snapshot.docs.map(
-            (doc) =>
-              ({
-                id: doc.id,
-                ...doc.data(),
-              } as Recipe)
-          );
-          observer.next(recipes);
-          observer.complete();
-        })
-        .catch((error) => observer.error(error));
-    });
+      .valueChanges({ idField: 'id' });
   }
 
   getRecipes(filters: RecipeFilters): Observable<Recipe[]> {
-    return new Observable<Recipe[]>((observer) => {
-      // Start with a basic query
-      let baseQuery = query(collection(this.db, 'recipes'));
+    console.log("****************************");
+    console.log("getRecipes = " + filters);
+    let query = this.firestore.collection<Recipe>('recipes');
 
-      // Apply the primary filters that can be handled by Firestore
-      if (filters.ingredients && filters.ingredients.length > 0) {
-        baseQuery = query(
-          baseQuery,
-          where('ingredients', 'array-contains-any', filters.ingredients)
-        );
-      }
+    console.log("getRecipes query = " + query);
+    console.log("getRecipes filters.ingredients?.length = " + filters.ingredients?.length);
+    if (filters.ingredients?.length) {
+      query = this.firestore.collection<Recipe>('recipes', ref =>
+        ref.where('ingredients', 'array-contains-any', filters.ingredients)
+      );
+      console.log("getRecipes if (filters.ingredients?.length) = " + query);
+    }
 
-      if (filters.mealType) {
-        baseQuery = query(baseQuery, where('mealType', '==', filters.mealType));
-      }
+    return query.valueChanges({ idField: 'id' }).pipe(
+      map(recipes => {
+        let filteredRecipes = recipes;
 
-      if (filters.maxTime) {
-        baseQuery = query(baseQuery, where('time', '<=', filters.maxTime));
-      }
-
-      // Execute the query
-      getDocs(baseQuery)
-        .then((querySnapshot) => {
-          let recipes = querySnapshot.docs.map(
-            (doc) => ({ id: doc.id, ...doc.data() } as Recipe)
+        if (filters.mealType) {
+          filteredRecipes = filteredRecipes.filter(
+            recipe => recipe.mealType === filters.mealType
           );
+        }
 
-          // Apply additional filters in memory
-          if (filters.skillLevel && filters.skillLevel.length > 0) {
-            recipes = recipes.filter((recipe) =>
-              recipe.skillLevel.some((level) =>
-                filters.skillLevel?.includes(level)
-              )
-            );
-          }
+        if (filters.maxTime) {
+          filteredRecipes = filteredRecipes.filter(
+            recipe => recipe.time <= filters.maxTime!
+          );
+        }
 
-          observer.next(recipes);
-          observer.complete();
-        })
-        .catch((error) => {
-          console.error('Error fetching recipes:', error);
-          observer.error(error);
-        });
-    });
+        if (filters.skillLevel?.length) {
+          filteredRecipes = filteredRecipes.filter(recipe =>
+            recipe.skillLevel.some(level => filters.skillLevel?.includes(level))
+          );
+        }
+
+        return filteredRecipes;
+      })
+    );
   }
 }
