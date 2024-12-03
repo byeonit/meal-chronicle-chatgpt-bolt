@@ -1,0 +1,114 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import './styles/variables.scss';
+
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: var(--font-family-base);
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+/* Material Typography Overrides */
+.mat-typography h1 {
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.mat-typography h2 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 0.875rem;
+}
+
+.mat-typography p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+/* Card Styles */
+.mat-mdc-card {
+  margin-bottom: var(--spacing-lg);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.mat-mdc-card-header {
+  padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.mat-mdc-card-content {
+  padding: var(--spacing-lg);
+}
+
+/* Form Fields */
+.mat-mdc-form-field {
+  width: 100%;
+  margin-bottom: var(--spacing-md);
+}
+
+/* Buttons */
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-stroked-button {
+  height: 40px;
+  padding: 0 var(--spacing-md);
+  font-weight: 500;
+}
+
+.mat-mdc-button-base + .mat-mdc-button-base {
+  margin-left: var(--spacing-sm);
+}
+
+/* Chips */
+.mat-mdc-chip-set {
+  margin: var(--spacing-xs) 0;
+}
+
+.mat-mdc-chip {
+  font-size: var(--font-size-sm);
+}
+
+/* Lists */
+.mat-mdc-list {
+  padding: 0;
+}
+
+.mat-mdc-list-item {
+  height: auto !important;
+  margin-bottom: var(--spacing-sm);
+  padding: var(--spacing-md) !important;
+}
+
+/* Container Layout */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+}
+
+/* Utility Classes */
+.mb-1 { margin-bottom: var(--spacing-sm); }
+.mb-2 { margin-bottom: var(--spacing-md); }
+.mb-3 { margin-bottom: var(--spacing-lg); }
+.mb-4 { margin-bottom: var(--spacing-xl); }
+
+.mt-1 { margin-top: var(--spacing-sm); }
+.mt-2 { margin-top: var(--spacing-md); }
+.mt-3 { margin-top: var(--spacing-lg); }
+.mt-4 { margin-top: var(--spacing-xl); }
+
+.p-1 { padding: var(--spacing-sm); }
+.p-2 { padding: var(--spacing-md); }
+.p-3 { padding: var(--spacing-lg); }
+.p-4 { padding: var(--spacing-xl); }
