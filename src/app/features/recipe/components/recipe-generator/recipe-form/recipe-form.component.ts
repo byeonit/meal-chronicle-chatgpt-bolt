@@ -1,16 +1,30 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  FormControl,
+  FormGroup,
+  FormBuilder,
+} from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { startWith, switchMap } from 'rxjs/operators';
 import { IngredientService } from '../../../../../core/services/ingredient.service';
-import { IngredientDocument } from '../../../../../core/models/ingredient.model';
+import { RecipeFilters } from '../../../../../core/models/recipe-filters.model';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
+interface RecipeFormData {
+  mealType: string;
+  maxTime: number;
+  skillLevel: string[];
+}
 
 @Component({
   selector: 'app-recipe-form',
@@ -24,10 +38,12 @@ import { IngredientDocument } from '../../../../../core/models/ingredient.model'
     MatAutocompleteModule,
     MatChipsModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSelectModule,
+    MatCheckboxModule,
   ],
   template: `
-    <div class="mat-typography">
+    <form [formGroup]="recipeForm" class="recipe-form">
       <mat-form-field appearance="outline" class="mat-form-field-full-width">
         <mat-label>Add ingredients</mat-label>
         <mat-chip-grid #chipGrid>
@@ -61,6 +77,28 @@ import { IngredientDocument } from '../../../../../core/models/ingredient.model'
         </mat-autocomplete>
       </mat-form-field>
 
+      <mat-form-field appearance="outline">
+        <mat-label>Meal Type</mat-label>
+        <mat-select formControlName="mealType">
+          <mat-option value="breakfast">Breakfast</mat-option>
+          <mat-option value="lunch">Lunch</mat-option>
+          <mat-option value="dinner">Dinner</mat-option>
+          <mat-option value="snack">Snack</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Maximum Preparation Time (minutes)</mat-label>
+        <input matInput type="number" formControlName="maxTime" min="0">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Skill Level</mat-label>
+        <mat-select formControlName="skillLevel">
+          <mat-option *ngFor="let level of skillLevels" [value]="level">{{ level }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
       <div class="mat-action-row">
         <button
           mat-raised-button
@@ -72,40 +110,63 @@ import { IngredientDocument } from '../../../../../core/models/ingredient.model'
           Generate Recipe
         </button>
       </div>
-    </div>
+    </form>
   `,
-  host: {
-    class: 'mat-typography'
-  }
+  styles: [
+    `
+    .recipe-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    `,
+  ],
 })
 export class RecipeFormComponent {
-  @Output() generate = new EventEmitter<string[]>();  // Emits the final list of ingredients for recipe generation
-  
-  ingredients$ = new BehaviorSubject<string[]>([]); // BehaviorSubject to track the ingredients list
-  ingredientCtrl = new FormControl(''); // FormControl for ingredient input
-  filteredIngredients$: Observable<string[]>; // Observable for filtered ingredient suggestions
+  @Output() generate = new EventEmitter<RecipeFilters>();
 
-  constructor(private ingredientService: IngredientService) {    
+  ingredients$ = new BehaviorSubject<string[]>([]);
+  ingredientCtrl = new FormControl('');
+  filteredIngredients$: Observable<string[]>;
+
+  mealTypeOptions: string[] = ['breakfast', 'lunch', 'dinner', 'snack'];
+  skillLevels: string[] = ['beginner', 'intermediate', 'expert'];
+
+  recipeForm: FormGroup<{
+    mealType: FormControl<string | null>;
+    maxTime: FormControl<number | null>;
+    skillLevel: FormControl<string[] | null>;
+  }>;
+
+  constructor(
+    private ingredientService: IngredientService,
+    private fb: FormBuilder
+  ) {
+    this.recipeForm = this.fb.group({
+      mealType: [''],
+      maxTime: [60],
+      skillLevel: [[] as string[]],
+    });
+
     this.filteredIngredients$ = this.ingredientCtrl.valueChanges.pipe(
       startWith(''),
       switchMap((value) =>
-        value ? this.ingredientService.searchIngredients(value) : new Observable<string[]>((observer) => {
-          observer.next([]);
-          observer.complete();
-        })
+        value
+          ? this.ingredientService.searchIngredients(value)
+          : new Observable<string[]>((observer) => {
+              observer.next([]);
+              observer.complete();
+            })
       )
     );
   }
 
-  /**
-   * Add the currently entered ingredient to the list
-   */
   addIngredient(): void {
     const value = this.ingredientCtrl.value?.trim();
     if (value && !this.ingredients$.getValue().includes(value)) {
       const updatedIngredients = [...this.ingredients$.getValue(), value];
-      this.ingredients$.next(updatedIngredients); // Update the BehaviorSubject
-      this.ingredientCtrl.setValue(''); // Clear the input field
+      this.ingredients$.next(updatedIngredients);
+      this.ingredientCtrl.setValue('');
     }
   }
 
@@ -118,18 +179,23 @@ export class RecipeFormComponent {
     }
   }
 
-  /**
-   * Remove an ingredient from the list
-   */
   removeIngredient(ingredient: string): void {
-    const updatedIngredients = this.ingredients$.getValue().filter((item) => item !== ingredient);
-    this.ingredients$.next(updatedIngredients); // Update the BehaviorSubject
+    const updatedIngredients = this.ingredients$
+      .getValue()
+      .filter((item) => item !== ingredient);
+    this.ingredients$.next(updatedIngredients);
   }
 
-  /**
-   * Emit the current ingredients list when generating the recipe
-   */
   onGenerateClick(): void {
-    this.generate.emit(this.ingredients$.getValue()); // Emit the current list of ingredients
+    const formValue = this.recipeForm.value;
+    
+    const filters: RecipeFilters = {
+      ingredients: this.ingredients$.getValue(),
+      mealType: formValue.mealType || undefined,
+      maxTime: formValue.maxTime || undefined,
+      skillLevel: formValue.skillLevel || undefined,
+    };
+
+    this.generate.emit(filters);
   }
 }
