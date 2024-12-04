@@ -25,6 +25,12 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/recipe/components/firebase-test/firebase-test-recipe.component')
         .then(m => m.FirebaseTestRecipeComponent)
+  },
+  {
+    path: 'ollama-test',
+    loadComponent: () =>
+      import('./features/recipe/components/ollama-test/ollama-test.component')
+        .then(m => m.OllamaTestComponent)
   }
 ];
 
