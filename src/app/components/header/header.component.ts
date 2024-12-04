@@ -34,7 +34,11 @@ import { MatIconModule } from '@angular/material/icon';
           </a>
           <a mat-button routerLink="/firebase-test-recipe" routerLinkActive="active" class="nav-link">
             <mat-icon>cloud</mat-icon>
-            <span>Firebase Test Recipe</span>
+            <span>Firebase Test</span>
+          </a>
+          <a mat-button routerLink="/ollama-test" routerLinkActive="active" class="nav-link">
+            <mat-icon>auto_awesome</mat-icon>
+            <span>Ollama Test</span>
           </a>
           <a mat-button class="nav-link">
             <mat-icon>favorite</mat-icon>

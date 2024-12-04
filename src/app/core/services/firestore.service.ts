@@ -18,6 +18,29 @@ import { IngredientDocument, IngredientData } from '../models/ingredient.model';
   providedIn: 'root'
 })
 export class FirestoreService {
+  /*
+    constructor(private firestore: AngularFirestore) {}
+
+  addIngredient(userId: string, ingredient: string): Promise<void> {
+    const ref = this.firestore.doc(`ingredients/${userId}`);
+    const data: IngredientDocument = {
+      ingredientList: [ingredient],
+      createdAt: new Date(),
+      userId
+    };
+    return ref.set(data, { merge: true });
+  }
+
+  getIngredients(userId: string): Observable<string[]> {
+    return this.firestore
+      .collection<IngredientData>('ingredients', ref =>
+        ref.where('userId', '==', userId)
+      )
+      .valueChanges()
+      .pipe(
+        map(docs => docs.flatMap(doc => doc.ingredientList || []))
+      );
+  */
   private db;
 
   //constructor(private firestore: AngularFirestore) {}
