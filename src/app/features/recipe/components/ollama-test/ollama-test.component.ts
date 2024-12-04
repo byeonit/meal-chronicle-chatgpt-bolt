@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,14 +7,13 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { OllamaRecipeService } from '../../../../core/services/ollama/ollama-recipe.service';
-import { OllamaRecipeResponse } from '../../../../core/models/ollama-recipe.model';
+import { AlternativeOllamaRecipeResponse, OllamaRecipeResponse } from '../../../../core/models/ollama-recipe.model';
 
 @Component({
   selector: 'app-ollama-test',
   standalone: true,
   imports: [
     CommonModule,
-    HttpClientModule,
     MatButtonModule,
     MatCardModule,
     MatIconModule,
@@ -32,6 +30,7 @@ import { OllamaRecipeResponse } from '../../../../core/models/ollama-recipe.mode
         </mat-card-header>
 
         <mat-card-content>
+
           <button 
             mat-raised-button 
             color="primary" 
@@ -48,19 +47,19 @@ import { OllamaRecipeResponse } from '../../../../core/models/ollama-recipe.mode
           </div>
 
           <div *ngIf="recipe && !loading" class="recipe-content">
-            <h2>{{ recipe.title }}</h2>
-            
-            <!--
+
             <div class="recipe-section">
-              <h3>Ingredients:</h3>
-              <p>{{ recipe.ingredients.join(', ') }}</p>
+              <h3>Recettes:</h3>            
+              <h2>{{ recipe.output.title }}</h2>
             </div>
-            -->
+            
+            <mat-divider></mat-divider>
+
             <div class="recipe-section">
               <h3>Ingredients:</h3>
-              <ol>
-                <li *ngFor="let rcp of recipe.ingredients ">{{ rcp }}</li>
-              </ol>
+              <ul>
+                <li *ngFor="let rcp of recipe.output.ingredients ">{{ rcp }}</li>
+              </ul>
             </div>
 
             <mat-divider></mat-divider>
@@ -68,10 +67,11 @@ import { OllamaRecipeResponse } from '../../../../core/models/ollama-recipe.mode
             <div class="recipe-section">
               <h3>Instructions:</h3>
               <ol>
-                <li *ngFor="let step of recipe.instructions ">{{ step }}</li>
+                <li *ngFor="let step of recipe.output.instructions ">{{ step }}</li>
               </ol>
             </div>
           </div>
+  
         </mat-card-content>
       </mat-card>
     </div>
@@ -135,7 +135,8 @@ import { OllamaRecipeResponse } from '../../../../core/models/ollama-recipe.mode
   `]
 })
 export class OllamaTestComponent {
-  recipe: OllamaRecipeResponse | null = null;
+  //recipe: OllamaRecipeResponse | null = null;
+  recipe: AlternativeOllamaRecipeResponse | null = null;
   loading = false;
 
   constructor(
@@ -153,33 +154,13 @@ export class OllamaTestComponent {
       skillLevel: 'intermediate'
     };
 
-console.log("request = "+ JSON.stringify(request) )
-/*
-this.ollamaService.generateRecipe(request).subscribe((_data) => {
-  if (_data) {
-    this.recipe = _data;
-    console.log("_data value = " + _data);
-    console.log("JSON.stringify(_data) value = " + JSON.stringify(_data));
-  } else {
-    console.log("else no value " );
-  }
-});
-*/
-
-  
     this.ollamaService.generateRecipe(request).subscribe({
       next: (response) => {
-        console.log("next value = " + response);
-        console.log("JSON.stringify(response) = " + JSON.stringify(response));
         this.recipe = response;
         this.loading = false;
 
       },
       error: (error) => {
-        console.log("error area with " + error);
-        console.log("error area with error.response = " + error.response);
-        console.log("error area with error.request = " + error.request);
-        console.log("error area with error.snackBar = " + error.snackBar);
         this.loading = false;
         this.snackBar.open(
           error.message || 'Error generating recipe. Please try again.',
