@@ -21,7 +21,6 @@ import {
 })
 export class RecipeService {
   constructor(private firestore: AngularFirestore) {}
-
   /*private db;
 
   constructor(private firebaseService: FirebaseService) {
@@ -87,74 +86,55 @@ export class RecipeService {
   }
 
   getRecentRecipes(): Observable<Recipe[]> {
-    return new Observable((observer) => {
-      getDocs(
-        query(
-          collection(this.db, 'recipes'),
-          orderBy('createdAt', 'desc'),
-          where('status', '==', 'generated')
-        )
+    return this.firestore
+      .collection<Recipe>('recipes', ref =>
+        ref
+          .where('status', '==', 'generated')
+          .orderBy('createdAt', 'desc')
+          .limit(10)
       )
-        .then((snapshot) => {
-          const recipes = snapshot.docs.map(
-            (doc) =>
-              ({
-                id: doc.id,
-                ...doc.data(),
-              } as Recipe)
-          );
-          observer.next(recipes);
-          observer.complete();
-        })
-        .catch((error) => observer.error(error));
-    });
+      .valueChanges({ idField: 'id' });
   }
 
   getRecipes(filters: RecipeFilters): Observable<Recipe[]> {
-    return new Observable<Recipe[]>((observer) => {
-      // Start with a basic query
-      let baseQuery = query(collection(this.db, 'recipes'));
+    console.log("****************************");
+    console.log("getRecipes = " + filters);
+    let query = this.firestore.collection<Recipe>('recipes');
 
-      // Apply the primary filters that can be handled by Firestore
-      if (filters.ingredients && filters.ingredients.length > 0) {
-        baseQuery = query(
-          baseQuery,
-          where('ingredients', 'array-contains-any', filters.ingredients)
-        );
-      }
+    console.log("getRecipes query = " + query);
+    console.log("getRecipes filters.ingredients?.length = " + filters.ingredients?.length);
+    if (filters.ingredients?.length) {
+      query = this.firestore.collection<Recipe>('recipes', ref =>
+        ref.where('ingredients', 'array-contains-any', filters.ingredients)
+      );
+      console.log("getRecipes if (filters.ingredients?.length) = " + query);
+    }
 
-      if (filters.mealType) {
-        baseQuery = query(baseQuery, where('mealType', '==', filters.mealType));
-      }
+    return query.valueChanges({ idField: 'id' }).pipe(
+      map(recipes => {
+        let filteredRecipes = recipes;
 
-      if (filters.maxTime) {
-        baseQuery = query(baseQuery, where('time', '<=', filters.maxTime));
-      }
-
-      // Execute the query
-      getDocs(baseQuery)
-        .then((querySnapshot) => {
-          let recipes = querySnapshot.docs.map(
-            (doc) => ({ id: doc.id, ...doc.data() } as Recipe)
+        if (filters.mealType) {
+          filteredRecipes = filteredRecipes.filter(
+            recipe => recipe.mealType === filters.mealType
           );
+        }
 
-          // Apply additional filters in memory
-          if (filters.skillLevel && filters.skillLevel.length > 0) {
-            recipes = recipes.filter((recipe) =>
-              recipe.skillLevel.some((level) =>
-                filters.skillLevel?.includes(level)
-              )
-            );
-          }
+        if (filters.maxTime) {
+          filteredRecipes = filteredRecipes.filter(
+            recipe => recipe.time <= filters.maxTime!
+          );
+        }
 
-          observer.next(recipes);
-          observer.complete();
-        })
-        .catch((error) => {
-          console.error('Error fetching recipes:', error);
-          observer.error(error);
-        });
-    });
+        if (filters.skillLevel?.length) {
+          filteredRecipes = filteredRecipes.filter(recipe =>
+            recipe.skillLevel.some(level => filters.skillLevel?.includes(level))
+          );
+        }
+
+        return filteredRecipes;
+      })
+    );
   }
 */
   getRecentRecipes(): Observable<Recipe[]> {

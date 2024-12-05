@@ -50,13 +50,13 @@ export class RecipeGeneratorComponent {
 
   onGenerate(filters: RecipeFilters) {
     console.log('Filters passed to getRecipes:', filters);
+
     this.recipeService.getRecipes(filters).subscribe({
       next: (recipes) => {
         console.log('Filtered recipes:', recipes);
-       if (recipes.length === 0) {
+        if (recipes.length === 0) {
           console.log('No recipes found for the given filters.');
         }
-        // Handle the filtered recipes (e.g., display them in the UI)
       },
       error: (error) => {
         console.error('Error fetching recipes:', error);

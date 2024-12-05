@@ -11,6 +11,8 @@ import { environment } from '../environments/environment';
 // Firebase imports
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { RecipeFeedbackService } from './core/services/firestore/recipe-feedback.service';
 import { provideHttpClient } from '@angular/common/http';
@@ -23,7 +25,7 @@ import { provideHttpClient } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     RouterModule,
-    FormsModule,    
+    FormsModule,
     HeaderComponent,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule
