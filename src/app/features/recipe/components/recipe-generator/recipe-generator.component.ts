@@ -45,6 +45,25 @@ export class RecipeGeneratorComponent {
   constructor(private recipeService: RecipeService) {}
 
   onGenerate(filters: RecipeFilters) {
+    /*
+      constructor(private recipeService: RecipeService) {}
+
+  onGenerate(filters: RecipeFilters) {
+    console.log('Filters passed to getRecipes:', filters);
+
+    this.recipeService.getRecipes(filters).subscribe({
+      next: (recipes) => {
+        console.log('Filtered recipes:', recipes);
+        if (recipes.length === 0) {
+          console.log('No recipes found for the given filters.');
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching recipes:', error);
+      },
+    });
+  }
+    */
     this.recipeService.getRecipes(filters).subscribe({
       next: (recipes) => {
         console.log('Filtered recipes:', recipes);
