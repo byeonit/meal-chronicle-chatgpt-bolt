@@ -13,6 +13,7 @@ export interface OllamaRecipeResponse {
 //formate for n8n workflow
 export interface  AlternativeOllamaRecipeResponse{
   output: {
+    id: string;
     title: string;
     ingredients: string[];
     instructions: string[];
