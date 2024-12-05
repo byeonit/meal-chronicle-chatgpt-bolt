@@ -21,7 +21,17 @@ export class OllamaRecipeService {
         return throwError(() => new Error('Failed to generate recipe. Please try again.'));
       })
     );
+  }
 
+  generateAlternativeRecipe(payload: any): Observable<any> {
+    const endpoint = `${this.ollamaApiUrl}/webhook/generate-alternative-recipe`; // Adjust endpoint path if necessary
+
+    return this.http.post<OllamaRecipeResponse>(endpoint, payload).pipe(
+      catchError(error => {
+        console.error('Error generating recipe:', error);
+        return throwError(() => new Error('Failed to generate recipe. Please try again.'));
+      })
+    );
   }
 
 }
