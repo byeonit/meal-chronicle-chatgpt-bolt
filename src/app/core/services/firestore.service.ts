@@ -8,7 +8,9 @@ import {
   getDocs, 
   query, 
   where,
-  DocumentData 
+  DocumentData, 
+  addDoc, 
+  Timestamp 
 } from 'firebase/firestore';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -72,5 +74,21 @@ export class FirestoreService {
           .flatMap(data => data.ingredientList || [])
       )
     );
+  }
+
+  async submitFeedback(recipeId: string, liked: boolean, comments: string): Promise<void> {
+    const feedbackCollection = collection(this.db, 'recipe_feedback');
+    const feedback = {
+      recipeId,
+      userFeedback: {
+        liked,
+        comments,
+      },
+      createdAt: Timestamp.now(),
+      generatedBy: 'Ollama',
+    };
+
+    await addDoc(feedbackCollection, feedback);
+    console.log('Feedback successfully submitted!');
   }
 }
