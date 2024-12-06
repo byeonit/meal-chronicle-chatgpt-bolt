@@ -1,4 +1,4 @@
-import { CommonModule, JsonPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { AlternativeOllamaRecipeResponse } from '../../../../../core/models/ollama-recipe.model';
 
