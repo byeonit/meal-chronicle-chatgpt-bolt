@@ -1,0 +1,41 @@
+<p>recipe-generate works!</p>
+{{recipe | json }}
+
+<div class="recipe-card">
+
+    <aside>
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/203277/oatmeal.jpg" alt="Chai Oatmeal" />
+    </aside>
+
+    <article *ngIf="recipe">
+
+        <h2>{{recipe.output.title}}</h2>
+        <h3>{{recipe.output.mealType}}</h3>
+
+        <ul>
+            <li><span class="icon icon-users"></span><span>{{recipe.output.servings}}</span></li>
+            <li><span class="icon icon-clock"></span><span>{{recipe.output.cookingTime}} min</span></li>
+            <li><span class="icon icon-level"></span><span>{{recipe.output.skillLevel}}</span></li>
+            <li><span class="icon icon-calories"></span><span>{{recipe.output.caloriesPerServing}}</span></li>
+            <li><span class="icon icon-calories"></span><span>{{recipe.output.totalCalories}}</span></li>
+        </ul>
+
+        <div class="ingredients">
+            <h3>Ingredients:</h3>
+            <ul>
+                <li *ngFor="let rcp of recipe.output.ingredients">{{ rcp }}</li>
+            </ul>
+        </div>
+
+        <div class="ingredients">
+            <h3>Instructions:</h3>
+            <ol>
+                <li *ngFor="let step of recipe.output.instructions">
+                    {{ step }}
+                </li>
+            </ol>
+        </div>
+
+    </article>
+
+</div>
