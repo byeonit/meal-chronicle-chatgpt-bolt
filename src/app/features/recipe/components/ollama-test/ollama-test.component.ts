@@ -154,7 +154,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
         <p class="loading-text">Generating variations...</p>
       </div>
 
-      <mat-card *ngIf="listOfAlternativeRecipe && !loading">
+      <mat-card *ngIf="listOfAlternativeRecipe && !loadingVariations">
         <mat-card-content class="recipe-content">
           <!-- Alternative recipe-->
           <div

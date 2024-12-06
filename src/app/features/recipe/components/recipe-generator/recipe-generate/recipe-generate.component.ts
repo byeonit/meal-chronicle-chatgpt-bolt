@@ -5,7 +5,7 @@ import { AlternativeOllamaRecipeResponse } from '../../../../../core/models/olla
 @Component({
   selector: 'app-recipe-generate',
   standalone: true,
-  imports: [JsonPipe, CommonModule],
+  imports: [CommonModule],
   templateUrl: './recipe-generate.component.html',
   styleUrl: './recipe-generate.component.css'
 })

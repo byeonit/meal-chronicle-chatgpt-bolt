@@ -6,11 +6,15 @@ import { RecipeService } from '../../../../core/services/recipe.service';
 import { Recipe } from '../../../../core/models/recipe.model';
 import { RecipeFilters } from '../../../../core/models/recipe-filters.model';
 import { OllamaRecipeService } from '../../../../core/services/ollama/ollama-recipe.service';
-import { AlternativeOllamaRecipeResponse } from '../../../../core/models/ollama-recipe.model';
+import {
+  AlternativeOllamaRecipeResponse,
+  ListOfAlternativeOllamaRecipeResponse,
+} from '../../../../core/models/ollama-recipe.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RecipeGenerateComponent } from './recipe-generate/recipe-generate.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDividerModule } from '@angular/material/divider';
+import { RecipeGenerateAlternativeComponent } from './recipe-generate-alternative/recipe-generate-alternative.component';
 
 @Component({
   selector: 'app-recipe-generator',
@@ -22,6 +26,7 @@ import { MatDividerModule } from '@angular/material/divider';
     RecipeGenerateComponent,
     MatProgressSpinnerModule,
     MatDividerModule,
+    RecipeGenerateAlternativeComponent,
   ],
   template: `
     <mat-card appearance="outlined" class="recipe-generator-card">
@@ -42,12 +47,22 @@ import { MatDividerModule } from '@angular/material/divider';
           <p class="loading-text">Generating variations...</p>
         </div>
 
-        <app-recipe-generate
-          [recipe]="recipe"
-          *ngIf="recipe && !loading"
-        ></app-recipe-generate>
+        <app-recipe-generate [recipe]="recipe" *ngIf="recipe && !loading" />
       </mat-card-content>
+      <mat-card-footer *ngIf="recipe && !loading">
+        <!-- Generate Variations -->
+        <button mat-raised-button color="accent" (click)="generateVariations()">
+          Generate Variations
+        </button>
+      </mat-card-footer>
     </mat-card>
+
+    <div *ngIf="loadingVariations" class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p class="loading-text">Generating variations...</p>
+    </div>
+
+    <app-recipe-generate-alternative [recipes]="listOfAlternativeRecipe"/>
   `,
   styles: [
     `
@@ -82,8 +97,10 @@ export class RecipeGeneratorComponent {
   loading = false;
   recipe: AlternativeOllamaRecipeResponse | null = null;
 
+  listOfAlternativeRecipe: ListOfAlternativeOllamaRecipeResponse | null = null;
+  loadingVariations = false;
+
   constructor(
-    private recipeService: RecipeService,
     private snackBar: MatSnackBar,
     private ollamaService: OllamaRecipeService,
   ) {}
@@ -91,43 +108,11 @@ export class RecipeGeneratorComponent {
   onGenerate(filters: RecipeFilters) {
     this.loading = true;
     this.recipe = null;
-    /*
-      constructor(private recipeService: RecipeService) {}
 
-  onGenerate(filters: RecipeFilters) {
-    console.log('Filters passed to getRecipes:', filters);
-
-    this.recipeService.getRecipes(filters).subscribe({
-      next: (recipes) => {
-        console.log('Filtered recipes:', recipes);
-        if (recipes.length === 0) {
-          console.log('No recipes found for the given filters.');
-        }
-      },
-      error: (error) => {
-        console.error('Error fetching recipes:', error);
-      },
-    });
-  }
-    */
-    /*
-    this.recipeService.getRecipes(filters).subscribe({
-      next: (recipes) => {
-        console.log('Filtered recipes:', recipes);
-        if (recipes.length === 0) {
-          console.log('No recipes found for the given filters.');
-        }
-      },
-      error: (error) => {
-        console.error('Error fetching recipes:', error);
-      },
-    });
-    */
     this.ollamaService.generateRecipe(filters).subscribe({
       next: (response) => {
         this.recipe = response;
         console.log('this.recipe = ' + this.recipe);
-        this.loading = false;
       },
       error: (error) => {
         this.loading = false;
@@ -137,6 +122,31 @@ export class RecipeGeneratorComponent {
           { duration: 5000 },
         );
       },
+      complete: () => {
+        this.loading = false;
+      },
     });
+  }
+
+  generateVariations(): void {
+    this.loadingVariations = true;
+    this.listOfAlternativeRecipe = null;
+
+    this.ollamaService
+      .generateAlternativeRecipe(this.recipe?.output)
+      .subscribe({
+        next: (response) => {
+          this.listOfAlternativeRecipe = response;
+          this.loadingVariations = false;
+        },
+        error: (error) => {
+          this.loadingVariations = false;
+          this.snackBar.open(
+            error.message || 'Error generating recipe. Please try again.',
+            'Close',
+            { duration: 5000 },
+          );
+        },
+      });
   }
 }
