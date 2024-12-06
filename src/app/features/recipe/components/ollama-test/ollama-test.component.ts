@@ -80,7 +80,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
             <div class="recipe-section">
               <h3>maxTime:</h3>
-              <p>{{ recipe.output.maxTime }}</p>
+              <p>{{ recipe.output.cookingTime }}</p>
             </div>
 
             <mat-divider></mat-divider>
@@ -178,7 +178,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
             <div class="recipe-section">
               <h3>maxTime:</h3>
-              <p>{{ variation.maxTime }}</p>
+              <p>{{ variation.cookingTime }}</p>
             </div>
 
             <div class="recipe-section">
