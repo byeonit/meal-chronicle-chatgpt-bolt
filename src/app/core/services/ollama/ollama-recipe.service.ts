@@ -34,4 +34,12 @@ export class OllamaRecipeService {
     );
   }
 
+  generateCulinary(filters: any, mode: string): Observable<any> {
+    const endpoint = `${this.ollamaApiUrl}/webhook/generate-culinary`; // Adjust endpoint path if necessary
+
+    return this.http.post<any>(endpoint, {
+      ...filters,
+      mode: mode,
+    });
+  }
 }

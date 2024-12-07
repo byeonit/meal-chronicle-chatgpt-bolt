@@ -1,0 +1,24 @@
+<div *ngIf="recipe" class="recipe-display">
+    <h2>{{ recipe.output.title }}</h2>
+    <div class="recipe-details">
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li *ngFor="let ingredient of recipe.output.ingredients">{{ ingredient }}</li>
+        </ul>
+      </div>
+  
+      <div class="steps">
+        <h3>Preparation Steps:</h3>
+        <ol>
+          <li *ngFor="let step of recipe.output.instructions">{{ step }}</li>
+        </ol>
+      </div>
+    </div>
+  
+    <div class="actions">
+      <button mat-raised-button color="primary">Save Recipe</button>
+      <button mat-raised-button color="accent">Share Recipe</button>
+    </div>
+  </div>
+  
