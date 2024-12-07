@@ -9,6 +9,12 @@ export const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'culinary',
+    loadChildren: () => 
+      import('./features/culinary-alchemy/culinary-alchemy-routing.module')
+        .then(m => m.CulinaryAlchemyRoutingModule)
+  },
+  {
     path: 'recipes',
     loadChildren: () => 
       import('./features/recipe/recipe.routes')

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { FirebaseService } from './firebase.service';
-import { 
-  getFirestore, 
-  collection, 
-  getDocs, 
-  query, 
-  where 
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  query,
+  where,
 } from 'firebase/firestore';
 import { Observable, from } from 'rxjs';
 
@@ -46,15 +46,15 @@ export class IngredientService {
     const searchQuery = query(
       ingredientsRef,
       where('ingredientName', '>=', queryText),
-      where('ingredientName', '<=', queryText + '\uf8ff') // Prefix search
+      where('ingredientName', '<=', queryText + '\uf8ff'), // Prefix search
     );
 
     // Convert Firestore query results into an observable
     return new Observable<string[]>((observer) => {
       getDocs(searchQuery)
         .then((querySnapshot) => {
-          const filteredIngredients = querySnapshot.docs.map((doc) => 
-            doc.data()['ingredientName'] as string
+          const filteredIngredients = querySnapshot.docs.map(
+            (doc) => doc.data()['ingredientName'] as string,
           );
           observer.next(filteredIngredients);
           observer.complete();

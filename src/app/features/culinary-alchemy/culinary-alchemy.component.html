@@ -1,0 +1,57 @@
+<div class="culinary-alchemy">
+    <h1>Discover Culinary Alchemy</h1>
+
+    <form [formGroup]="culinaryForm" (ngSubmit)="onSubmit()">
+        <!-- Ingredients Selector -->
+        <app-predefines-ingredients [selectedIngredients]="selectedIngredients"
+            (selectedIngredientsChange)="onIngredientsChange($event)"></app-predefines-ingredients>
+
+        <!-- Meal Type -->
+        <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Meal Type</mat-label>
+            <mat-select formControlName="mealType">
+                <mat-option value="breakfast">Breakfast</mat-option>
+                <mat-option value="lunch">Lunch</mat-option>
+                <mat-option value="dinner">Dinner</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- Dietary Preferences -->
+        <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Dietary Preferences</mat-label>
+            <mat-select formControlName="dietaryPreference">
+                <mat-option *ngFor="let preference of dietaryPreferences" [value]="preference">
+                    {{ preference }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- Cuisine Type -->
+        <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Cuisine Type</mat-label>
+            <mat-select formControlName="cuisineType">
+                <mat-option *ngFor="let type of cuisineTypes" [value]="type">
+                    {{ type }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- Maximum Time -->
+        <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Maximum Preparation Time</mat-label>
+            <input matInput type="number" formControlName="maxTime" />
+        </mat-form-field>
+
+        <!-- Skill Level -->
+        <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Skill Level</mat-label>
+            <mat-select formControlName="skillLevel">
+                <mat-option value="beginner">Beginner</mat-option>
+                <mat-option value="intermediate">Intermediate</mat-option>
+                <mat-option value="expert">Expert</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit">Generate Recipe</button>
+    </form>
+</div>

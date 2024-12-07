@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
 import { FirebaseService } from './firebase.service';
-import { 
-  getFirestore, 
-  collection, 
-  doc, 
-  setDoc, 
-  getDocs, 
-  query, 
+import {
+  getFirestore,
+  collection,
+  doc,
+  setDoc,
+  getDocs,
+  query,
   where,
-  DocumentData, 
-  addDoc, 
-  Timestamp 
+  DocumentData,
+  addDoc,
+  Timestamp,
 } from 'firebase/firestore';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IngredientDocument, IngredientData } from '../models/ingredient.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FirestoreService {
   /*
@@ -56,27 +56,33 @@ export class FirestoreService {
     const data: IngredientDocument = {
       ingredientList: [ingredient],
       createdAt: new Date(),
-      userId
+      userId,
     };
     return setDoc(ref, data, { merge: true });
   }
 
   getIngredients(userId: string): Observable<string[]> {
     return from(
-      getDocs(query(
-        collection(this.db, 'ingredients'),
-        where('userId', '==', userId)
-      ))
+      getDocs(
+        query(
+          collection(this.db, 'ingredients'),
+          where('userId', '==', userId),
+        ),
+      ),
     ).pipe(
-      map(snapshot => 
+      map((snapshot) =>
         snapshot.docs
-          .map(doc => doc.data() as IngredientData)
-          .flatMap(data => data.ingredientList || [])
-      )
+          .map((doc) => doc.data() as IngredientData)
+          .flatMap((data) => data.ingredientList || []),
+      ),
     );
   }
 
-  async submitFeedback(recipeId: string, liked: boolean, comments: string): Promise<void> {
+  async submitFeedback(
+    recipeId: string,
+    liked: boolean,
+    comments: string,
+  ): Promise<void> {
     const feedbackCollection = collection(this.db, 'recipe_feedback');
     const feedback = {
       recipeId,
@@ -90,5 +96,28 @@ export class FirestoreService {
 
     await addDoc(feedbackCollection, feedback);
     console.log('Feedback successfully submitted!');
+  }
+
+  getPredefinedIngredients(): Observable<any[]> {
+    const predefinedIngredientsRef = collection(
+      this.db,
+      'predefined_ingredients',
+    );
+    return from(
+      getDocs(predefinedIngredientsRef).then((snapshot) =>
+        snapshot.docs.map((doc) => doc.data()),
+      ),
+    );
+  }
+
+  getFilterOptions(filterType: string): Observable<any[]> {
+    const filterRef = collection(this.db, 'filters');
+    return from(
+      getDocs(filterRef).then((snapshot) =>
+        snapshot.docs
+          .filter((doc) => doc.id === filterType)
+          .map((doc) => doc.data()?.['options'] || []),
+      ),
+    );
   }
 }
