@@ -13,6 +13,10 @@ import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { FirestoreService } from '../../core/services/firestore.service';
+import { OllamaRecipeService } from '../../core/services/ollama/ollama-recipe.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { RecipeGenerateComponent } from '../recipe/components/recipe-generator/recipe-generate/recipe-generate.component';
 
 @Component({
   selector: 'app-culinary-alchemy',
@@ -26,6 +30,8 @@ import { FirestoreService } from '../../core/services/firestore.service';
     MatInputModule,
     MatOptionModule,
     MatSelectModule,
+    MatProgressSpinnerModule,
+    RecipeGenerateComponent
   ],
   templateUrl: './culinary-alchemy.component.html',
   styleUrl: './culinary-alchemy.component.css',
@@ -42,13 +48,21 @@ export class CulinaryAlchemyComponent implements OnInit {
     skillLevel: new FormControl<string>('beginner', [Validators.required]),
     dietaryPreference: new FormControl<string>(''),
     cuisineType: new FormControl<string>(''),
+    culinaryMode: new FormControl<string>('all-in-one', [Validators.required]), // Added recipeMode
   });
 
   dietaryPreferences: string[] = [];
   cuisineTypes: string[] = [];
   selectedIngredients: string[] = []; // Tracks selected ingredients from the child component
 
-  constructor(private firestoreService: FirestoreService) {}
+  loading = false;
+  recipe: any;
+
+  constructor(
+    private firestoreService: FirestoreService,
+    private ollamaService: OllamaRecipeService,
+    private snackBar: MatSnackBar,
+  ) {}
 
   ngOnInit(): void {
     this.firestoreService.getFilterOptions('dietary_preferences').subscribe({
@@ -73,7 +87,35 @@ export class CulinaryAlchemyComponent implements OnInit {
 
   onSubmit(): void {
     if (this.culinaryForm.valid) {
+      this.loading = true;
+      this.recipe = null;
+
       console.log('Form Data:', this.culinaryForm.value);
+
+      this.ollamaService
+        .generateCulinary(
+          this.culinaryForm.value,
+          this.culinaryForm.value.culinaryMode
+            ? this.culinaryForm.value.culinaryMode
+            : '',
+        )
+        .subscribe({
+          next: (response) => {
+            this.recipe = response;
+            console.log('this.recipe = ' + this.recipe);
+          },
+          error: (error) => {
+            this.loading = false;
+            this.snackBar.open(
+              error.message || 'Error generating recipe. Please try again.',
+              'Close',
+              { duration: 5000 },
+            );
+          },
+          complete: () => {
+            this.loading = false;
+          },
+        });
     } else {
       console.error('Form is invalid');
     }

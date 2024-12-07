@@ -6,6 +6,14 @@
         <app-predefines-ingredients [selectedIngredients]="selectedIngredients"
             (selectedIngredientsChange)="onIngredientsChange($event)"></app-predefines-ingredients>
 
+        <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Recipe Mode</mat-label>
+            <mat-select formControlName="culinaryMode">
+                <mat-option value="all-in-one">All-In-One</mat-option>
+                <mat-option value="gourmet">Gourmet</mat-option>
+            </mat-select>
+        </mat-form-field>
+
         <!-- Meal Type -->
         <mat-form-field appearance="fill" class="form-field">
             <mat-label>Meal Type</mat-label>
@@ -54,4 +62,12 @@
 
         <button mat-raised-button color="primary" type="submit">Generate Recipe</button>
     </form>
+
+    <div *ngIf="loading" class="loading-container">
+        <mat-spinner diameter="40"></mat-spinner>
+        <p class="loading-text">Generating variations...</p>
+    </div>
+    
+    <app-recipe-generate [recipe]="recipe" *ngIf="recipe" />
+
 </div>
