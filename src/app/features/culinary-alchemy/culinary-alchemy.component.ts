@@ -19,6 +19,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RecipeGenerateComponent } from '../recipe/components/recipe-generator/recipe-generate/recipe-generate.component';
 import { RecipeDisplayComponent } from './recipe-display/recipe-display.component';
 import { MatButtonModule } from '@angular/material/button';
+import { CulinaryFeedbackComponent } from './culinary-feedback/culinary-feedback.component';
 
 @Component({
   selector: 'app-culinary-alchemy',
@@ -35,7 +36,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatProgressSpinnerModule,
     RecipeGenerateComponent,
     RecipeDisplayComponent,
-    MatButtonModule
+    MatButtonModule,
+    CulinaryFeedbackComponent
   ],
   templateUrl: './culinary-alchemy.component.html',
   styleUrl: './culinary-alchemy.component.css',
@@ -61,6 +63,7 @@ export class CulinaryAlchemyComponent implements OnInit {
 
   loading = false;
   recipe: any;
+  feedbackSubmitted = false; // Track feedback submission
 
   constructor(
     private firestoreService: FirestoreService,
@@ -106,6 +109,7 @@ export class CulinaryAlchemyComponent implements OnInit {
         .subscribe({
           next: (response) => {
             this.recipe = response;
+            this.feedbackSubmitted = false; // Reset feedback status
             console.log('this.recipe = ' + this.recipe);
           },
           error: (error) => {
@@ -123,5 +127,11 @@ export class CulinaryAlchemyComponent implements OnInit {
     } else {
       console.error('Form is invalid');
     }
+  }
+
+
+  onFeedbackSubmitted(): void {
+    this.feedbackSubmitted = true; // Mark feedback as submitted
+    alert('Thank you for your feedback!');
   }
 }
