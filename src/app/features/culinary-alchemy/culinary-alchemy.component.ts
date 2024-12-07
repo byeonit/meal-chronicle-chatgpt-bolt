@@ -17,6 +17,8 @@ import { OllamaRecipeService } from '../../core/services/ollama/ollama-recipe.se
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RecipeGenerateComponent } from '../recipe/components/recipe-generator/recipe-generate/recipe-generate.component';
+import { RecipeDisplayComponent } from './recipe-display/recipe-display.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-culinary-alchemy',
@@ -31,7 +33,9 @@ import { RecipeGenerateComponent } from '../recipe/components/recipe-generator/r
     MatOptionModule,
     MatSelectModule,
     MatProgressSpinnerModule,
-    RecipeGenerateComponent
+    RecipeGenerateComponent,
+    RecipeDisplayComponent,
+    MatButtonModule
   ],
   templateUrl: './culinary-alchemy.component.html',
   styleUrl: './culinary-alchemy.component.css',
