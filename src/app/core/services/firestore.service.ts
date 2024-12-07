@@ -120,4 +120,68 @@ export class FirestoreService {
       ),
     );
   }
+
+  /**
+   * Fetch recipes from Firestore based on macronutrient goals.
+   * @param macronutrients - User's macronutrient goals (protein, carbs, fats, etc.)
+   * @returns Observable of recipes
+   */
+  getRecipesForMacros(macronutrients: any): Observable<any> {
+    const recipesRef = collection(this.db, 'macronutrient_recipes'); // Updated to macronutrient_recipes collection
+
+    // Create a query to filter recipes based on macronutrient goals
+    let recipesQuery = query(recipesRef);
+
+    if (macronutrients.protein) {
+      recipesQuery = query(
+        recipesRef,
+        where('proteinGoal', '>=', macronutrients.protein),
+      );
+    }
+    if (macronutrients.carbs) {
+      recipesQuery = query(
+        recipesRef,
+        where('carbsGoal', '>=', macronutrients.carbs),
+      );
+    }
+    if (macronutrients.fats) {
+      recipesQuery = query(
+        recipesRef,
+        where('fatsGoal', '>=', macronutrients.fats),
+      );
+    }
+
+    // Fetch recipes from Firestore
+    return new Observable((observer) => {
+      getDocs(recipesQuery)
+        .then((querySnapshot) => {
+          const recipes: any[] = [];
+          querySnapshot.forEach((doc) => {
+            recipes.push(doc.data());
+          });
+          observer.next(recipes); // Send the recipes back to the component
+          observer.complete();
+        })
+        .catch((error) => {
+          observer.error('Error fetching recipes from Firestore: ' + error);
+        });
+    });
+  }
+
+  /**
+   * Save user's macronutrient goals to Firestore.
+   * @param goals - User's macronutrient goals to store
+   * @returns Observable
+   */
+  async saveUserGoals(userId: string, goals: any): Promise<void> {
+    const goalsRef = doc(this.db, 'user_goals', userId); // Unique document for each user
+    try {
+      // Save the user's goals in Firestore (using merge to avoid overwriting other data)
+      await setDoc(goalsRef, goals, { merge: true });
+      console.log('User goals saved successfully!');
+    } catch (error) {
+      console.error('Error saving user goals to Firestore:', error);
+      throw new Error('Failed to save user goals');
+    }
+  }
 }
