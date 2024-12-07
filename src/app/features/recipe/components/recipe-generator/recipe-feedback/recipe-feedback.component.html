@@ -1,0 +1,16 @@
+<!-- Feedback Form -->
+<div class="feedback-form">
+  <h3>Provide Feedback</h3>
+  <mat-button-toggle-group [formControl]="favoriteControl" aria-label="Font Style">
+    <mat-button-toggle [value]="true">Like</mat-button-toggle>
+    <mat-button-toggle disabled></mat-button-toggle>
+    <mat-button-toggle [value]="false">Dislike</mat-button-toggle>
+  </mat-button-toggle-group>
+
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Comments</mat-label>
+    <textarea matInput [(ngModel)]="feedback.comments" rows="4"></textarea>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="submitFeedback()">Submit Feedback</button>
+</div>

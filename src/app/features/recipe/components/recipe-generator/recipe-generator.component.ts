@@ -15,6 +15,7 @@ import { RecipeGenerateComponent } from './recipe-generate/recipe-generate.compo
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDividerModule } from '@angular/material/divider';
 import { RecipeGenerateAlternativeComponent } from './recipe-generate-alternative/recipe-generate-alternative.component';
+import { RecipeFeedbackComponent } from "./recipe-feedback/recipe-feedback.component";
 
 @Component({
   selector: 'app-recipe-generator',
@@ -27,7 +28,8 @@ import { RecipeGenerateAlternativeComponent } from './recipe-generate-alternativ
     MatProgressSpinnerModule,
     MatDividerModule,
     RecipeGenerateAlternativeComponent,
-  ],
+    RecipeFeedbackComponent
+],
   template: `
     <mat-card appearance="outlined" class="recipe-generator-card">
       <mat-card-header>
@@ -56,6 +58,8 @@ import { RecipeGenerateAlternativeComponent } from './recipe-generate-alternativ
         </button>
       </mat-card-footer>
     </mat-card>
+    
+    <app-recipe-feedback [recipe]="recipe" *ngIf="recipe && !loading"/>
 
     <div *ngIf="loadingVariations" class="loading-container">
       <mat-spinner diameter="40"></mat-spinner>
