@@ -1,0 +1,43 @@
+<!-- Alternative recipe-->
+<mat-tab-group>
+  <mat-tab label="recipe" *ngFor="let variation of recipes?.output" class="variation">
+
+    <div class="recipe-card">
+      <aside>
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/203277/oatmeal.jpg" alt="Chai Oatmeal" />
+      </aside>
+
+      <article>
+
+        <h2>{{variation.title}}</h2>
+        <h3>{{variation.mealType}}</h3>
+
+        <ul>
+          <li><span class="icon icon-users"></span><span>{{variation.servings}}</span></li>
+          <li><span class="icon icon-clock"></span><span>{{variation.cookingTime}} min</span></li>
+          <li><span class="icon icon-level"></span><span>{{variation.skillLevel}}</span></li>
+          <li><span class="icon icon-calories"></span><span>{{variation.caloriesPerServing}}</span></li>
+          <li><span class="icon icon-calories"></span><span>{{variation.totalCalories}}</span></li>
+        </ul>
+
+        <div class="ingredients">
+          <h3>Ingredients:</h3>
+          <ul>
+            <li *ngFor="let rcp of variation.ingredients">{{ rcp }}</li>
+          </ul>
+        </div>
+
+        <div class="ingredients">
+          <h3>Instructions:</h3>
+          <ol>
+            <li *ngFor="let step of variation.instructions">
+              {{ step }}
+            </li>
+          </ol>
+        </div>
+
+      </article>
+    </div>
+
+  </mat-tab>
+</mat-tab-group>

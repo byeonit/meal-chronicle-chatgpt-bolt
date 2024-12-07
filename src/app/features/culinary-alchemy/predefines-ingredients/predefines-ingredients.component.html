@@ -1,0 +1,28 @@
+<div class="ingredient-selector">
+    <h2>Select Ingredients</h2>
+  
+    <!-- Search Bar -->
+    <mat-form-field appearance="outline" class="search-bar">
+      <mat-label>Search Ingredients</mat-label>
+      <input matInput [(ngModel)]="searchQuery" placeholder="Search by name" />
+    </mat-form-field>
+  
+    <!-- Ingredient Categories -->
+    <div *ngFor="let category of categories" class="ingredient-category">
+      <h3>{{ category.category }}</h3>
+      <div class="ingredient-list">
+        <mat-chip-listbox>
+          <mat-chip-option
+            *ngFor="let ingredient of getFilteredIngredients(category)"
+            [selected]="selectedIngredients.includes(ingredient)"
+            (click)="toggleIngredient(ingredient)"
+            selectable
+            removable
+          >
+            {{ ingredient }}
+          </mat-chip-option>
+        </mat-chip-listbox>
+      </div>
+    </div>
+  </div>
+  

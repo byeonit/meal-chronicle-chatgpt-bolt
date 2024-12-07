@@ -91,4 +91,11 @@ export class FirestoreService {
     await addDoc(feedbackCollection, feedback);
     console.log('Feedback successfully submitted!');
   }
+
+  getPredefinedIngredients(): Observable<any[]> {
+    const predefinedIngredientsRef = collection(this.db, 'predefined_ingredients');
+    return from(getDocs(predefinedIngredientsRef).then((snapshot) =>
+      snapshot.docs.map((doc) => doc.data())
+    ));
+  }
 }

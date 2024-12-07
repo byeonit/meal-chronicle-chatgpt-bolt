@@ -9,6 +9,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { OllamaRecipeService } from '../../../../core/services/ollama/ollama-recipe.service';
 import {
   AlternativeOllamaRecipeResponse,
+  ListOfAlternativeOllamaRecipeResponse,
   OllamaRecipeResponse,
 } from '../../../../core/models/ollama-recipe.model';
 import { FirestoreService } from '../../../../core/services/firestore.service';
@@ -67,6 +68,21 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
               <h2>{{ recipe.output.title }}</h2>
             </div>
 
+            <div class="recipe-section">
+              <h3>MealType:</h3>
+              <p>{{ recipe.output.mealType }}</p>
+            </div>
+
+            <div class="recipe-section">
+              <h3>skillLevel:</h3>
+              <p>{{ recipe.output.skillLevel }}</p>
+            </div>
+
+            <div class="recipe-section">
+              <h3>maxTime:</h3>
+              <p>{{ recipe.output.cookingTime }}</p>
+            </div>
+
             <mat-divider></mat-divider>
 
             <div class="recipe-section">
@@ -121,8 +137,81 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
             >
               Submit Feedback
             </button>
+            <!-- Generate Variations -->
+            <button
+              mat-raised-button
+              color="accent"
+              (click)="generateVariations()"
+            >
+              Generate Variations
+            </button>
           </div>
         </mat-card-actions>
+      </mat-card>
+
+      <div *ngIf="loadingVariations" class="loading-container">
+        <mat-spinner diameter="40"></mat-spinner>
+        <p class="loading-text">Generating variations...</p>
+      </div>
+
+      <mat-card *ngIf="listOfAlternativeRecipe && !loadingVariations">
+        <mat-card-content class="recipe-content">
+          <!-- Alternative recipe-->
+          <div
+            *ngFor="let variation of listOfAlternativeRecipe.output"
+            class="variation"
+          >
+            <div class="recipe-section">
+              <h3>Recettes:</h3>
+              <h2>{{ variation.title }}</h2>
+            </div>
+
+            <div class="recipe-section">
+              <h3>MealType:</h3>
+              <p>{{ variation.mealType }}</p>
+            </div>
+
+            <div class="recipe-section">
+              <h3>skillLevel:</h3>
+              <p>{{ variation.skillLevel }}</p>
+            </div>
+
+            <div class="recipe-section">
+              <h3>maxTime:</h3>
+              <p>{{ variation.cookingTime }}</p>
+            </div>
+
+            <div class="recipe-section">
+              <h3>MealType:</h3>
+              <h2>{{ variation.mealType }}</h2>
+            </div>
+
+            <div class="recipe-section">
+              <h3>skillLevel:</h3>
+              <h2>{{ variation.skillLevel }}</h2>
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <div class="recipe-section">
+              <h3>Ingredients:</h3>
+              <ul>
+                <li *ngFor="let rcp of variation.ingredients">{{ rcp }}</li>
+              </ul>
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <div class="recipe-section">
+              <h3>Instructions:</h3>
+              <ol>
+                <li *ngFor="let step of variation.instructions">
+                  {{ step }}
+                </li>
+              </ol>
+            </div>
+          </div>
+        </mat-card-content>
       </mat-card>
     </div>
   `,
@@ -189,6 +278,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 export class OllamaTestComponent {
   //recipe: OllamaRecipeResponse | null = null;
   recipe: AlternativeOllamaRecipeResponse | null = null;
+  listOfAlternativeRecipe: ListOfAlternativeOllamaRecipeResponse | null = null;
   loading = false;
 
   favoriteControl = new FormControl(true);
@@ -197,6 +287,9 @@ export class OllamaTestComponent {
     liked: true,
     comments: '',
   };
+
+  variations: any[] = [];
+  loadingVariations = false;
 
   constructor(
     private ollamaService: OllamaRecipeService,
@@ -254,4 +347,26 @@ export class OllamaTestComponent {
       console.error('No recipe available for feedback.');
     }
   }
+
+  generateVariations(): void {
+    this.loadingVariations = true;
+
+    this.ollamaService
+      .generateAlternativeRecipe(this.recipe?.output)
+      .subscribe({
+        next: (response) => {
+          this.listOfAlternativeRecipe = response;
+          this.loadingVariations = false;
+        },
+        error: (error) => {
+          this.loadingVariations = false;
+          this.snackBar.open(
+            error.message || 'Error generating recipe. Please try again.',
+            'Close',
+            { duration: 5000 },
+          );
+        },
+      });
+  }
+
 }
