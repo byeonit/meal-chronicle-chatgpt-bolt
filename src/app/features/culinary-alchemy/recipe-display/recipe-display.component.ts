@@ -11,4 +11,5 @@ import { CommonModule } from '@angular/common';
 })
 export class RecipeDisplayComponent {
   @Input() recipe: AlternativeOllamaRecipeResponse | null = null;
+  
 }
