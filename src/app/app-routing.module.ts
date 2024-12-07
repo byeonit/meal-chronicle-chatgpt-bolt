@@ -9,6 +9,12 @@ export const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'macro',
+    loadChildren: () => 
+      import('./features/macro-master/macro-master-routing.module')
+        .then(m => m.MacroMasterRoutingModule)
+  },
+  {
     path: 'culinary',
     loadChildren: () => 
       import('./features/culinary-alchemy/culinary-alchemy-routing.module')
