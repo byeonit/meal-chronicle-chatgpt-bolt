@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { OllamaRecipeRequest, OllamaRecipeResponse } from '../../models/ollama-recipe.model';
 import { MacronutrientGoals } from '../../models/macronutrient-goals.model';
+import { MealPlanRequest } from '../../models/mealplan.model';
 
 @Injectable({
   providedIn: 'root'
@@ -61,4 +62,19 @@ export class OllamaRecipeService {
     );
   }
 
+    /**
+   * Sends user inputs to the n8n workflow to generate a meal plan via Ollama.
+   * @param mealPlanRequest - The structured data for meal plan generation
+   * @returns Observable of the generated meal plan
+   */
+    generateMealPlan(mealPlanRequest: MealPlanRequest): Observable<any> {
+      const endpoint = `${this.ollamaApiUrl}/webhook-test/generate-meal-plan`; // Adjust endpoint path if necessary
+
+      return this.http.post<any>(endpoint, mealPlanRequest).pipe(
+        catchError(error => {
+          console.error('Error generating Macronutrient Plan Recipe:', error);
+          return throwError(() => new Error('Failed to generate MacronutrientGoals Recipe. Please try again.'));
+        })
+      );
+    }
 }
