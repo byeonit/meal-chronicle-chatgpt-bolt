@@ -1,0 +1,9 @@
+<div class="meal-master">
+  <app-mealmaster-user-profile (formSubmit)="handleFormSubmit($event)"/>
+
+  <div *ngIf="errorMessage" class="error-message">
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <app-meal-plan-display [mealPlan]="mealPlan"/>
+</div>
