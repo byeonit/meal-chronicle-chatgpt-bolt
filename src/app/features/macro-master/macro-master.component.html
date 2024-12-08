@@ -1,1 +1,11 @@
-<p>macro-master works!</p>
+<app-macromaster-user-profile 
+    (recipeDataEvent)="handleRecipe($event)"
+    (loadingStatutEvent)="handleLoadingStatut($event)"
+/>
+<br/>
+<div *ngIf="loading" class="loading-container">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p class="loading-text">Generating recipe...</p>
+</div>
+<app-macromaster-nutritional-breakdown *ngIf="loading==false && macronutrientRecipe" [recipe]="macronutrientRecipe"/>
+
