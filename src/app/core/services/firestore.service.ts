@@ -110,19 +110,19 @@ export class FirestoreService {
     if (macronutrients.protein) {
       recipesQuery = query(
         recipesRef,
-        where('proteinGoal', '>=', macronutrients.protein),
+        where('protein', '>=', macronutrients.protein),
       );
     }
     if (macronutrients.carbs) {
       recipesQuery = query(
         recipesRef,
-        where('carbsGoal', '>=', macronutrients.carbs),
+        where('carbs', '>=', macronutrients.carbs),
       );
     }
     if (macronutrients.fats) {
       recipesQuery = query(
         recipesRef,
-        where('fatsGoal', '>=', macronutrients.fats),
+        where('fats', '>=', macronutrients.fats),
       );
     }
 
