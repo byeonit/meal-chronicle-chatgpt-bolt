@@ -68,7 +68,7 @@ export class OllamaRecipeService {
    * @returns Observable of the generated meal plan
    */
     generateMealPlan(mealPlanRequest: MealPlanRequest): Observable<any> {
-      const endpoint = `${this.ollamaApiUrl}/webhook/generate-meal-plan`; // Adjust endpoint path if necessary
+      const endpoint = `${this.ollamaApiUrl}/webhook-test/generate-meal-plan`; // Adjust endpoint path if necessary
 
       return this.http.post<any>(endpoint, mealPlanRequest).pipe(
         catchError(error => {

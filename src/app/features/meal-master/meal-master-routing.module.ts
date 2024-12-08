@@ -1,7 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: '',
+    loadComponent: () => 
+      import('./meal-master.component')
+        .then(m => m.MealMasterComponent)
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

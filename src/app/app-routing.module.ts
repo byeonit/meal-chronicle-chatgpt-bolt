@@ -8,6 +8,13 @@ export const routes: Routes = [
     redirectTo: 'recipes',
     pathMatch: 'full'
   },
+  
+  {
+    path: 'meal-planner',
+    loadChildren: () => 
+      import('./features/meal-master/meal-master-routing.module')
+        .then(m => m.MealMasterRoutingModule)
+  },
   {
     path: 'macro',
     loadChildren: () => 

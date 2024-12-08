@@ -1,0 +1,30 @@
+<div *ngIf="mealPlan.length === 0" class="no-data">
+    <p>No meal plan available. Please generate a plan to get started.</p>
+  </div>
+  
+  <div *ngFor="let day of mealPlan; let dayIndex = index" class="meal-day">
+    <h2>Day {{ dayIndex + 1 }}</h2>
+    <mat-card *ngFor="let meal of day.meals" class="meal-card">
+      <mat-card-header>
+        <mat-card-title>{{ meal.type }}: {{ meal.name }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h4>Ingredients</h4>
+        <ul>
+          <li *ngFor="let ingredient of meal.ingredients">{{ ingredient }}</li>
+        </ul>
+        <h4>Instructions</h4>
+        <ol>
+          <li *ngFor="let step of meal.instructions">{{ step }}</li>
+        </ol>
+        <h4>Nutritional Breakdown</h4>
+        <ul>
+          <li>Protein: {{ meal.nutritionalBreakdown.protein }}g</li>
+          <li>Carbs: {{ meal.nutritionalBreakdown.carbs }}g</li>
+          <li>Fats: {{ meal.nutritionalBreakdown.fats }}g</li>
+          <li>Calories: {{ meal.nutritionalBreakdown.calories }} kcal</li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
