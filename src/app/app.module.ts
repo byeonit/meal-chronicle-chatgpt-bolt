@@ -37,7 +37,8 @@ import { HeaderComponent } from './layouts/header';
 import { FooterComponent } from './layouts/footer';
 import { SidebarComponent } from './layouts/sidebar';
 import { ThemeCustomizerComponent } from './layouts/theme-customizer';
-
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 @NgModule({
     imports: [
         RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }),
@@ -55,9 +56,10 @@ import { ThemeCustomizerComponent } from './layouts/theme-customizer';
         }),
         StoreModule.forRoot({ index: indexReducer }),
         SharedModule.forRoot(),
+        AngularFirestoreModule
     ],
     declarations: [AppComponent, HeaderComponent, FooterComponent, SidebarComponent, ThemeCustomizerComponent, IndexComponent, AppLayout, AuthLayout],
-    providers: [Title],
+    providers: [Title, provideAnimationsAsync()],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

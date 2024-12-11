@@ -1,0 +1,24 @@
+<div *ngIf="recipe">
+    <h3>{{ recipe.output.title }}</h3>
+    <h4>Ingredients</h4>
+    <ul>
+      <li *ngFor="let ingredient of recipe.output.ingredients">{{ ingredient }}</li>
+    </ul>
+  
+    <h4>Instructions</h4>
+    <ul>
+      <li *ngFor="let step of recipe.output.instructions">{{ step }}</li>
+    </ul>
+  
+    <h4>Nutritional Breakdown</h4>
+    <ul>
+      <li>Protein: {{ recipe.output.nutritionalBreakdown.protein }}g</li>
+      <li>Carbs: {{ recipe.output.nutritionalBreakdown.carbs }}g</li>
+      <li>Fats: {{ recipe.output.nutritionalBreakdown.fats }}g</li>
+      <li>Calories: {{ recipe.output.nutritionalBreakdown.calories }} kcal</li>
+    </ul>
+  
+    <p>Preparation Time: {{ recipe.output.prepTime }}</p>
+    <p>Cook Time: {{ recipe.output.cookTime }}</p>
+  </div>
+  

@@ -1,0 +1,31 @@
+<form (ngSubmit)="submitForm()">
+    <mat-form-field>
+      <mat-label>Duration (Days)</mat-label>
+      <input matInput type="number" [(ngModel)]="durationDays" name="duration" required />
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>Dietary Preferences</mat-label>
+      <mat-select [(ngModel)]="dietaryPreferences" name="preferences" multiple>
+        <mat-option value="Vegetarian">Vegetarian</mat-option>
+        <mat-option value="Pescatarian">Pescatarian</mat-option>
+        <mat-option value="Vegan">Vegan</mat-option>
+        <mat-option value="Dairy-Free">Dairy-Free</mat-option>
+        <mat-option value="Gluten-Free">Gluten-Free</mat-option>
+        <mat-option value="Ketogenic">Ketogenic</mat-option>
+        <mat-option value="Paleo">Paleo</mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>Fitness Goal</mat-label>
+      <mat-select [(ngModel)]="fitnessGoal" name="goal">
+        <mat-option value="Muscle Gain">Muscle Gain</mat-option>
+        <mat-option value="Weight Loss">Weight Loss</mat-option>
+        <mat-option value="Maintenance">Maintenance</mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <button mat-raised-button color="primary" type="submit">Generate Meal Plan</button>
+  </form>
+  
