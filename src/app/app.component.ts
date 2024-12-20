@@ -1,30 +1,41 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter, map, switchMap, tap } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-root',
-  standalone: false,
-  template: `
-    <app-header></app-header>
-    <div class="app-container">
-      <router-outlet></router-outlet>
-    </div>
-  `,
-  styles: [`
-    :host {
-      display: block;
-      min-height: 100vh;
-    }
-
-    .app-container {
-      padding-top: 80px;
-      padding-bottom: var(--spacing-xl);
-      max-width: 1200px;
-      margin: 0 auto;
-      padding-left: var(--spacing-lg);
-      padding-right: var(--spacing-lg);
-    }
-  `]
+    selector: 'app-root',
+    templateUrl: './app.component.html',
 })
 export class AppComponent {
-  title = 'MealChronicle';
+    constructor(
+        private router: Router,
+        private activatedRoute: ActivatedRoute,
+        private titleService: Title,
+    ) {
+        this.router.events
+            .pipe(
+                filter((event) => event instanceof NavigationEnd),
+                map(() => this.activatedRoute),
+                map((route) => {
+                    while (route.firstChild) route = route.firstChild;
+                    return route;
+                }),
+                filter((route) => route.outlet === 'primary'),
+                switchMap((route) => {
+                    return route.data.pipe(
+                        map((routeData: any) => {
+                            const title = routeData['title'];
+                            return { title };
+                        }),
+                    );
+                }),
+                tap((data: any) => {
+                    let title = data.title;
+                    title = (title ? title + ' | ' : '') + 'VRISTO - Multipurpose Tailwind Dashboard Template';
+                    this.titleService.setTitle(title);
+                }),
+            )
+            .subscribe();
+    }
 }
