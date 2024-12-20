@@ -1,6 +1,7 @@
-import { Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
-export const RECIPE_ROUTES: Routes = [
+const routes: Routes = [
   {
     path: '',
     loadComponent: () => 
@@ -13,4 +14,10 @@ export const RECIPE_ROUTES: Routes = [
       import('./components/recipe-list/recipe-list.component')
         .then(m => m.RecipeListComponent)
   }
-];
+]; 
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class RecipeRoutingModule { }
