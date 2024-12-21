@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
 import { FormsModule } from '@angular/forms';
+import { IconModule } from "../../../shared/icon/icon.module";
 
 @Component({
   selector: 'app-predefines-ingredients-steps1',
@@ -15,7 +16,8 @@ import { FormsModule } from '@angular/forms';
     MatInputModule,
     MatChipsModule,
     FormsModule,
-  ],
+    IconModule
+],
   templateUrl: './predefines-ingredients-steps1.component.html',
   styleUrl: './predefines-ingredients-steps1.component.css'
 })

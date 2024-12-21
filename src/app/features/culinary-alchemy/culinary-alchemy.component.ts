@@ -23,6 +23,7 @@ import { CulinaryFeedbackComponent } from './culinary-feedback/culinary-feedback
 import { PredefinesIngredientsSteps1Component } from './predefines-ingredients-steps1/predefines-ingredients-steps1.component';
 import { MatCardModule } from '@angular/material/card';
 import {MatStepperModule} from '@angular/material/stepper';
+import { IconModule } from 'src/app/shared/icon/icon.module';
 
 @Component({
   selector: 'app-culinary-alchemy',
@@ -43,7 +44,8 @@ import {MatStepperModule} from '@angular/material/stepper';
     RecipeDisplayComponent,
     MatButtonModule,
     CulinaryFeedbackComponent,
-    MatStepperModule
+    MatStepperModule,
+    IconModule
   ],
   templateUrl: './culinary-alchemy.component.html',
   styleUrl: './culinary-alchemy.component.css',
