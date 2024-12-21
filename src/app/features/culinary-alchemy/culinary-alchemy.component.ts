@@ -51,7 +51,8 @@ import { InfoHeaderCulinaryAlchemyComponent } from './info-header-culinary-alche
     IconModule,
     PredefinesIngredientsSteps2Component,
     PredefinesIngredientsSteps3Component,
-    InfoHeaderCulinaryAlchemyComponent
+    InfoHeaderCulinaryAlchemyComponent,
+    RecipeDisplayComponent
   ],
   templateUrl: './culinary-alchemy.component.html',
   styleUrl: './culinary-alchemy.component.css',

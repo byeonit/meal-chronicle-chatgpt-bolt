@@ -1,24 +1,127 @@
-<div *ngIf="recipe" class="recipe-display">
-    <h2>{{ recipe.output.title }}</h2>
-    <div class="recipe-details">
-      <div class="ingredients">
-        <h3>Ingredients:</h3>
-        <ul>
-          <li *ngFor="let ingredient of recipe.output.ingredients">{{ ingredient }}</li>
-        </ul>
-      </div>
-  
-      <div class="steps">
-        <h3>Preparation Steps:</h3>
-        <ol>
-          <li *ngFor="let step of recipe.output.instructions">{{ step }}</li>
-        </ol>
-      </div>
+<div class="panel">
+
+  <div class="prose flex flex-wrap justify-between gap-4 px-4">
+    <h1 class="m-0 dark:text-white-dark">Fish Vermicelli with Fresh Dill and Pineapple Sauce</h1>
+  </div>
+
+  <hr class="my-6 border-[#e0e6ed] dark:border-[#1b2e4b]" />
+
+  <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+
+    <div class="prose block w-full space-y-6 overflow-x-auto rounded-lg border border-white-dark/20 p-6">
+      <h2 class="m-0 dark:text-white-dark">Ingredients</h2>
+      <ul class="space-y-3 font-semibold">
+        <li>
+          <icon-arrow-left class="inline text-primary ltr:mr-2 rtl:ml-2 rtl:rotate-180" />
+          <span class="list-text">1 1/2 pounds halibut fillets.</span>
+        </li>
+        <li>
+          <icon-arrow-left class="inline text-primary ltr:mr-2 rtl:ml-2 rtl:rotate-180" />
+          <span class="list-text">8 ounces rice vermicelli noodles</span>
+        </li>
+        <li>
+          <icon-arrow-left class="inline text-primary ltr:mr-2 rtl:ml-2 rtl:rotate-180" />
+          <span class="list-text">1 cup fresh dill, leaves picked from stems</span>
+        </li>
+        <li>
+          <icon-arrow-left class="inline text-primary ltr:mr-2 rtl:ml-2 rtl:rotate-180" />
+          <span class="list-text">1 cup finely sliced scallions</span>
+        </li>
+        <li>
+          <icon-arrow-left class="inline text-primary ltr:mr-2 rtl:ml-2 rtl:rotate-180" />
+          <span class="list-text">4 tablespoons chopped roasted peanuts</span>
+        </li>
+        <li>
+          <icon-arrow-left class="inline text-primary ltr:mr-2 rtl:ml-2 rtl:rotate-180" />
+          <span class="list-text">1/2 cup canola oil</span>
+        </li>
+        <li>
+          <icon-arrow-left class="inline text-primary ltr:mr-2 rtl:ml-2 rtl:rotate-180" />
+          <span class="list-text">2 tablespoons fish sauce (nam pla)</span>
+        </li>
+      </ul>
     </div>
-  
-    <div class="actions">
-      <button mat-raised-button color="primary">Save Recipe</button>
-      <button mat-raised-button color="accent">Share Recipe</button>
+
+    <div class="prose block w-full space-y-6 overflow-x-auto rounded-lg border border-white-dark/20 p-6">
+      <h2 class="m-0 dark:text-white-dark">Preparation Steps:</h2>
+      <ol>
+        <div>
+          <li>
+            <span class="list-text">In a medium-size bowl, mix the marinade ingredients together. Cut the halibut into 1
+              1/2-inch-long pieces. Add the fish to the marinade and toss well. Set aside for 30 minutes.</span>
+          </li>
+          <br />
+        </div>
+        <div>
+          <li>
+            <span class="list-text">Bring a large pot of water to a boil. Meanwhile, in a blender, blend the pineapple
+              sauce ingredients until smooth.</span>
+          </li>
+          <br />
+        </div>
+        <div>
+          <li>
+            <span class="list-text">When the water is boiling, add the vermicelli and stir. Cook until the noodles are
+              soft but not mushy, 1 to 2 minutes. (Or just soak the noodles in a bowl of hot water for 4 to 5 minutes.)
+              Drain well and divide among 4 plates; set aside.</span>
+          </li>
+          <br />
+        </div>
+        <div>
+          <li>
+            <span class="list-text">Heat a large sauté pan over high heat. When the pan is hot, add half the marinated
+              fish and reduce heat to medium. Cook until the fish starts to brown, 30 seconds to 1 minute. Carefully
+              turn
+              the fish pieces over, then cook for about 20 seconds more. Add half the dill and scallions and sauté for
+              about 20 seconds, or until the scallions are wilted.</span>
+          </li>
+          <br />
+        </div>
+      </ol>
+    </div>
+
+    <div class="panel h-full overflow-hidden border-0 p-0">
+      <div class="min-h-[80px] bg-gradient-to-r from-[#4361ee] to-[#160f6b] p-6">
+        <div class="prose flex items-center justify-between text-white">
+          <h2 class="m-0 text-white">Do you like this recipe ?</h2>
+        </div>
+      </div>
+
+      <div class="p-5">
+
+        <div class="mb-5">
+          <h3>Please rate this Recipe</h3>
+        </div>
+
+        <div class="mb-5 space-y-1">
+          <div class="flex items-center justify-between">
+            <!-- Star Rating -->
+            <mat-button-toggle-group [(ngModel)]="rating" name="rating" aria-label="Rating">
+              <mat-button-toggle value="1">⭐</mat-button-toggle>
+              <mat-button-toggle value="2">⭐⭐</mat-button-toggle>
+              <mat-button-toggle value="3">⭐⭐⭐</mat-button-toggle>
+              <mat-button-toggle value="4">⭐⭐⭐⭐</mat-button-toggle>
+              <mat-button-toggle value="5">⭐⭐⭐⭐⭐</mat-button-toggle>
+            </mat-button-toggle-group>
+          </div>
+
+          <br/>
+
+          <div class="flex items-center justify-between">
+            <!-- Comment Box -->
+            <mat-form-field style="width: 100%;">
+              <mat-label>Comment (Optional)</mat-label>
+              <textarea matInput [(ngModel)]="comment"></textarea>
+            </mat-form-field>
+          </div>
+
+        </div>
+
+        <div class="flex justify-around px-2 text-center">
+          <button mat-raised-button color="primary" (click)="submitFeedback()"
+            class="btn btn-secondary ltr:mr-2 rtl:ml-2">Submit Feedback</button>
+        </div>
+      </div>
     </div>
   </div>
-  
+</div>
