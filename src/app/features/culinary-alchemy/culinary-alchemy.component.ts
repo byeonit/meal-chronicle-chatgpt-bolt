@@ -26,6 +26,7 @@ import {MatStepperModule} from '@angular/material/stepper';
 import { IconModule } from 'src/app/shared/icon/icon.module';
 import { PredefinesIngredientsSteps2Component } from './predefines-ingredients-steps2/predefines-ingredients-steps2.component';
 import { PredefinesIngredientsSteps3Component } from './predefines-ingredients-steps3/predefines-ingredients-steps3.component';
+import { InfoHeaderCulinaryAlchemyComponent } from './info-header-culinary-alchemy/info-header-culinary-alchemy.component';
 
 @Component({
   selector: 'app-culinary-alchemy',
@@ -49,7 +50,8 @@ import { PredefinesIngredientsSteps3Component } from './predefines-ingredients-s
     MatStepperModule,
     IconModule,
     PredefinesIngredientsSteps2Component,
-    PredefinesIngredientsSteps3Component
+    PredefinesIngredientsSteps3Component,
+    InfoHeaderCulinaryAlchemyComponent
   ],
   templateUrl: './culinary-alchemy.component.html',
   styleUrl: './culinary-alchemy.component.css',
