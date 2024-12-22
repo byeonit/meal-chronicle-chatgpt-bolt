@@ -4,6 +4,7 @@ import { MacronutrientRecipe } from '../../core/models/macronutrient-goals.model
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MacromasterNutritionalBreakdownComponent } from './macromaster-nutritional-breakdown/macromaster-nutritional-breakdown.component';
+import { InfoHeaderMacroMasterComponent } from "./info-header-macro-master/info-header-macro-master.component";
 
 @Component({
   selector: 'app-macro-master',
@@ -12,8 +13,9 @@ import { MacromasterNutritionalBreakdownComponent } from './macromaster-nutritio
     CommonModule,
     MacromasterNutritionalBreakdownComponent,
     MacromasterUserProfileComponent,
-    MatProgressSpinnerModule
-  ],
+    MatProgressSpinnerModule,
+    InfoHeaderMacroMasterComponent
+],
   templateUrl: './macro-master.component.html',
   styleUrl: './macro-master.component.css'
 })
