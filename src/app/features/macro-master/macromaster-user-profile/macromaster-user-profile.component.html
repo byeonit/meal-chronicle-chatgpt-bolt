@@ -1,39 +1,85 @@
-<div>
-    <h2>Set Your Macronutrient Goals</h2>
-    
-    <form [formGroup]="macroProfileForm" (ngSubmit)="fetchMacronutrimentRecipeBasedOnGoals()">
-      <div>
-        <label for="proteinGoal">Protein Goal (g):</label>
-        <input id="proteinGoal" formControlName="proteinGoal" type="number" />
-      </div>
-      
-      <div>
-        <label for="carbsGoal">Carbs Goal (g):</label>
-        <input id="carbsGoal" formControlName="carbsGoal" type="number" />
-      </div>
-  
-      <div>
-        <label for="fatsGoal">Fats Goal (g):</label>
-        <input id="fatsGoal" formControlName="fatsGoal" type="number" />
-      </div>
-  
-      <div>
-        <label for="fitnessGoal">Fitness Goal:</label>
-        <select id="fitnessGoal" formControlName="fitnessGoal">
-          <option value="muscle_gaining">Muscle Gaining</option>
-          <option value="weight_loss">Weight Loss</option>
-          <option value="maintenance">Maintenance</option>
-        </select>
-      </div>
-  
-      <div>
-        <label for="targetCalories">Target Calories:</label>
-        <input id="targetCalories" formControlName="targetCalories" type="number" />
-      </div>
+<div class="panel h-full mb-5">
+  <form [formGroup]="macroProfileForm" (ngSubmit)="fetchMacronutrimentRecipeBasedOnGoals()">
+    <div class="border-b border-[#e0e6ed] p-5 dark:border-[#1b2e4b]">
+      <h5 class="text-lg font-semibold dark:text-white-light">Set Your Macronutrient Goals</h5>
+    </div>
+    <div class="mt-12">
+      <div class="block w-full space-y-4 overflow-x-auto rounded-lg border border-white-dark/20 p-4">
 
-      <br/>
-      
-      <button mat-raised-button color="primary" type="submit" [disabled]="macroProfileForm.invalid">Load Recipe</button>
-    </form>
-  </div>
-  
+        <div
+          class="flex min-w-[125px] items-center justify-between rounded-xl bg-white p-3 font-semibold text-gray-500 shadow-[0_0_4px_2px_rgb(31_45_61_/_10%)] transition-all duration-300 hover:scale-[1.01] hover:text-primary dark:bg-[#1b2e4b]">
+          <label for="proteinGoal" class="font-semibold text-primary mb-0 w-1/3 ltr:mr-2 rtl:ml-2">
+            Protein Goal (g) :
+          </label>
+          <input 
+            id="proteinGoal" 
+            type="number" 
+            formControlName="proteinGoal" 
+            placeholder="0"
+            class="form-input h-11  bg-white shadow-[0_0_4px_2px_rgb(31_45_61_/_10%)] placeholder:tracking-wider ltr:pr-11 rtl:pl-11" />
+        </div>
+
+        <div
+          class="flex min-w-[125px] items-center justify-between rounded-xl bg-white p-3 font-semibold text-gray-500 shadow-[0_0_4px_2px_rgb(31_45_61_/_10%)] transition-all duration-300 hover:scale-[1.01] hover:text-primary dark:bg-[#1b2e4b]">
+          <label for="carbsGoal" class="font-semibold text-primary mb-0 w-1/3 ltr:mr-2 rtl:ml-2">
+            Carbs Goal (g) :
+          </label>
+          <input 
+            id="carbsGoal" 
+            type="number" 
+            formControlName="carbsGoal" 
+            placeholder="0"
+            class="form-input h-11 bg-white shadow-[0_0_4px_2px_rgb(31_45_61_/_10%)] placeholder:tracking-wider ltr:pr-11 rtl:pl-11" />
+        </div>
+
+        <div
+          class="flex min-w-[125px] items-center justify-between rounded-xl bg-white p-3 font-semibold text-gray-500 shadow-[0_0_4px_2px_rgb(31_45_61_/_10%)] transition-all duration-300 hover:scale-[1.01] hover:text-primary dark:bg-[#1b2e4b]">
+          <label for="fatsGoal" class="font-semibold text-primary mb-0 w-1/3 ltr:mr-2 rtl:ml-2">
+            Fats Goal (g) :
+          </label>
+          <input 
+            id="fatsGoal" 
+            type="number" 
+            formControlName="fatsGoal" 
+            placeholder="0"
+            class="form-input h-11 bg-white shadow-[0_0_4px_2px_rgb(31_45_61_/_10%)] placeholder:tracking-wider ltr:pr-11 rtl:pl-11" />
+        </div>
+
+        <div
+          class="flex min-w-[125px] items-center justify-between rounded-xl bg-white p-3 font-semibold text-gray-500 shadow-[0_0_4px_2px_rgb(31_45_61_/_10%)] transition-all duration-300 hover:scale-[1.01] hover:text-primary dark:bg-[#1b2e4b]">
+          <label for="targetCalories" class="font-semibold text-primary mb-0 w-1/3 ltr:mr-2 rtl:ml-2">
+            Target Calories :
+          </label>
+          <input 
+            id="targetCalories" 
+            type="number" 
+            formControlName="targetCalories" 
+            placeholder="0"
+            class="form-input h-11 bg-white shadow-[0_0_4px_2px_rgb(31_45_61_/_10%)] placeholder:tracking-wider ltr:pr-11 rtl:pl-11" />
+        </div>
+
+        <div
+          class="flex min-w-[125px] items-center justify-between rounded-xl bg-white p-3 font-semibold text-gray-500 shadow-[0_0_4px_2px_rgb(31_45_61_/_10%)] transition-all duration-300 hover:scale-[1.01] hover:text-primary dark:bg-[#1b2e4b]">
+          <label for="fitnessGoal" class="font-semibold text-primary mb-0 w-1/3 ltr:mr-2 rtl:ml-2">
+            Fitness Goal :
+          </label>
+          <select id="fitnessGoal" name="fitnessGoal" class="form-select flex-1" formControlName="fitnessGoal">
+            <option value="muscle_gaining">Muscle Gaining</option>
+            <option value="weight_loss">Weight Loss</option>
+            <option value="maintenance">Maintenance</option>
+          </select>
+        </div>
+
+        <button 
+          mat-raised-button color="primary" 
+          type="submit" 
+          [disabled]="macroProfileForm.invalid"
+          class="btn btn-primary w-full btn-lg"
+        >
+          Load Recipe
+        </button>
+
+      </div>
+    </div>
+  </form>
+</div>
