@@ -12,7 +12,7 @@ import { IconModule } from "../../shared/icon/icon.module";
   animations: [
 
     slideDownUp],
-  templateUrl: './knowledge-base.component.html',
+  templateUrl: './knowledge-base.component_v1.html',
   styleUrl: './knowledge-base.component.css',
   imports: [
         CommonModule,
