@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { MacroMasterRoutingModule } from './macro-master-routing.module';
 import { MacroMasterComponent } from './macro-master.component';
+import { InfoHeaderMacroMasterComponent } from './info-header-macro-master/info-header-macro-master.component';
 
 
 @NgModule({
@@ -10,7 +11,8 @@ import { MacroMasterComponent } from './macro-master.component';
   imports: [
     CommonModule,
     MacroMasterRoutingModule,
-    MacroMasterComponent
+    MacroMasterComponent,
+    InfoHeaderMacroMasterComponent
   ]
 })
 export class MacroMasterModule { }

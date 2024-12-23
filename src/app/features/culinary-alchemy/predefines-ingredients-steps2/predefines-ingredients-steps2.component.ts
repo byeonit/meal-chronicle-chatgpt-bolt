@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { PredefinesIngredientsComponent } from './predefines-ingredients/predefines-ingredients.component';
 import {
   FormControl,
   FormGroup,
@@ -12,29 +11,20 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
-import { FirestoreService } from '../../core/services/firestore.service';
-import { OllamaRecipeService } from '../../core/services/ollama/ollama-recipe.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { RecipeGenerateComponent } from '../recipe/components/recipe-generator/recipe-generate/recipe-generate.component';
-import { RecipeDisplayComponent } from './recipe-display/recipe-display.component';
 import { MatButtonModule } from '@angular/material/button';
-import { CulinaryFeedbackComponent } from './culinary-feedback/culinary-feedback.component';
-import { PredefinesIngredientsSteps1Component } from './predefines-ingredients-steps1/predefines-ingredients-steps1.component';
 import { MatCardModule } from '@angular/material/card';
 import {MatStepperModule} from '@angular/material/stepper';
 import { IconModule } from 'src/app/shared/icon/icon.module';
-import { PredefinesIngredientsSteps2Component } from './predefines-ingredients-steps2/predefines-ingredients-steps2.component';
-import { PredefinesIngredientsSteps3Component } from './predefines-ingredients-steps3/predefines-ingredients-steps3.component';
-import { InfoHeaderCulinaryAlchemyComponent } from './info-header-culinary-alchemy/info-header-culinary-alchemy.component';
+import { OllamaRecipeService } from 'src/app/core/services/ollama/ollama-recipe.service';
+import { FirestoreService } from 'src/app/core/services/firestore.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-culinary-alchemy',
+  selector: 'app-predefines-ingredients-steps2',
   standalone: true,
   imports: [
     CommonModule,
-    PredefinesIngredientsComponent,
-    PredefinesIngredientsSteps1Component,
     MatCardModule,
     FormsModule,
     ReactiveFormsModule,
@@ -43,21 +33,14 @@ import { InfoHeaderCulinaryAlchemyComponent } from './info-header-culinary-alche
     MatOptionModule,
     MatSelectModule,
     MatProgressSpinnerModule,
-    RecipeGenerateComponent,
-    RecipeDisplayComponent,
     MatButtonModule,
-    CulinaryFeedbackComponent,
     MatStepperModule,
-    IconModule,
-    PredefinesIngredientsSteps2Component,
-    PredefinesIngredientsSteps3Component,
-    InfoHeaderCulinaryAlchemyComponent,
-    RecipeDisplayComponent
+    IconModule
   ],
-  templateUrl: './culinary-alchemy.component.html',
-  styleUrl: './culinary-alchemy.component.css',
+  templateUrl: './predefines-ingredients-steps2.component.html',
+  styleUrl: './predefines-ingredients-steps2.component.css'
 })
-export class CulinaryAlchemyComponent implements OnInit {
+export class PredefinesIngredientsSteps2Component implements OnInit {
   culinaryForm = new FormGroup({
     ingredients: new FormControl<string[]>([], [Validators.required]),
     mealType: new FormControl<string>('', [Validators.required]),
@@ -85,7 +68,6 @@ export class CulinaryAlchemyComponent implements OnInit {
     private ollamaService: OllamaRecipeService,
     private snackBar: MatSnackBar,
   ) {}
-
   ngOnInit(): void {
     this.firestoreService.getFilterOptions('dietary_preferences').subscribe({
       next: (options) => {

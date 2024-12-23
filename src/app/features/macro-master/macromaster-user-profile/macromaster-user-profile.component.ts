@@ -9,11 +9,17 @@ import {
 import { OllamaRecipeService } from '../../../core/services/ollama/ollama-recipe.service';
 import { MacronutrientRecipe } from '../../../core/models/macronutrient-goals.model';
 import { MatButtonModule } from '@angular/material/button';
+import { IconModule } from 'src/app/shared/icon/icon.module';
 
 @Component({
   selector: 'app-macromaster-user-profile',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, MatButtonModule],
+  imports: [
+    FormsModule, 
+    ReactiveFormsModule, 
+    MatButtonModule, 
+    IconModule
+  ],
   templateUrl: './macromaster-user-profile.component.html',
   styleUrl: './macromaster-user-profile.component.css',
 })
