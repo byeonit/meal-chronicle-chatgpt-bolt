@@ -20,6 +20,13 @@ import { RecipeGenerateComponent } from '../recipe/components/recipe-generator/r
 import { RecipeDisplayComponent } from './recipe-display/recipe-display.component';
 import { MatButtonModule } from '@angular/material/button';
 import { CulinaryFeedbackComponent } from './culinary-feedback/culinary-feedback.component';
+import { PredefinesIngredientsSteps1Component } from './predefines-ingredients-steps1/predefines-ingredients-steps1.component';
+import { MatCardModule } from '@angular/material/card';
+import {MatStepperModule} from '@angular/material/stepper';
+import { IconModule } from 'src/app/shared/icon/icon.module';
+import { PredefinesIngredientsSteps2Component } from './predefines-ingredients-steps2/predefines-ingredients-steps2.component';
+import { PredefinesIngredientsSteps3Component } from './predefines-ingredients-steps3/predefines-ingredients-steps3.component';
+import { InfoHeaderCulinaryAlchemyComponent } from './info-header-culinary-alchemy/info-header-culinary-alchemy.component';
 
 @Component({
   selector: 'app-culinary-alchemy',
@@ -27,6 +34,8 @@ import { CulinaryFeedbackComponent } from './culinary-feedback/culinary-feedback
   imports: [
     CommonModule,
     PredefinesIngredientsComponent,
+    PredefinesIngredientsSteps1Component,
+    MatCardModule,
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -37,7 +46,13 @@ import { CulinaryFeedbackComponent } from './culinary-feedback/culinary-feedback
     RecipeGenerateComponent,
     RecipeDisplayComponent,
     MatButtonModule,
-    CulinaryFeedbackComponent
+    CulinaryFeedbackComponent,
+    MatStepperModule,
+    IconModule,
+    PredefinesIngredientsSteps2Component,
+    PredefinesIngredientsSteps3Component,
+    InfoHeaderCulinaryAlchemyComponent,
+    RecipeDisplayComponent
   ],
   templateUrl: './culinary-alchemy.component.html',
   styleUrl: './culinary-alchemy.component.css',

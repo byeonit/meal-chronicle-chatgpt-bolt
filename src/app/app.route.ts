@@ -5,6 +5,7 @@ import { IndexComponent } from './index';
 import { AppLayout } from './layouts/app-layout';
 import { AuthLayout } from './layouts/auth-layout';
 import { CulinaryAlchemyRoutingModule } from './features/culinary-alchemy/culinary-alchemy-routing.module';
+import { KnowledgeBaseComponent } from './pages/knowledge-base/knowledge-base.component';
 
 export const routes: Routes = [
     /*{
@@ -24,6 +25,7 @@ export const routes: Routes = [
         children: [
             // dashboard
             { path: '', component: IndexComponent, data: { title: 'Sales Admin' } },
+            { path: 'pages/knowledge-base', component: KnowledgeBaseComponent, data: { title: 'Knowledge Base' } },
             { path: 'culinary',
                     loadChildren: () => 
                     import('./features/culinary-alchemy/culinary-alchemy-routing.module')

@@ -1,0 +1,33 @@
+<div class="panel h-full mb-5">
+
+  <div class="border-b border-[#e0e6ed] p-5 dark:border-[#1b2e4b]">
+    <h5 class="text-lg font-semibold dark:text-white-light">Select Ingredients</h5>
+  </div>
+
+  <div class="mt-12">
+    <label >Ajoutez les ingrédients que vous avez à la maison. </label>
+    <p>      
+Vous pouvez choisir des ingrédients dans la liste ou dans votre inventaire enregistré.
+
+N'oubliez pas : si un ingrédient n'est pas disponible dans la liste par défaut, il suffit de taper son nom dans la barre de recherche et de l'ajouter.
+    </p>
+    <br/>
+    <input [(ngModel)]="searchQuery" placeholder="By name" class="form-input h-11 rounded-full bg-white shadow-[0_0_4px_2px_rgb(31_45_61_/_10%)] placeholder:tracking-wider ltr:pr-11 rtl:pl-11" />
+
+    <div class="flex p-5" *ngFor="let category of categories" >
+      <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary dark:bg-primary dark:text-white-light">
+          <icon-edit class="h-5 w-5" />
+      </div>
+      <div class="font-semibold ltr:ml-3 rtl:mr-3">
+          <span class="text-white-dark">List of selectable : {{ category.category }}</span>
+          <mat-chip-listbox>
+            <mat-chip-option *ngFor="let ingredient of getFilteredIngredients(category)"
+              [selected]="selectedIngredients.includes(ingredient)" (click)="toggleIngredient(ingredient)" selectable
+              removable>
+              {{ ingredient }}
+            </mat-chip-option>
+          </mat-chip-listbox>
+      </div>      
+   </div>
+   
+</div>

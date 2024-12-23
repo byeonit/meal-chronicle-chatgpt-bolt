@@ -18,6 +18,7 @@ import { MenuModule } from 'headlessui-angular';
 
 // icons
 import { IconModule } from 'src/app/shared/icon/icon.module';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @NgModule({
     imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, TranslateModule.forChild(), NgScrollbarModule, MenuModule, IconModule],
@@ -31,6 +32,7 @@ import { IconModule } from 'src/app/shared/icon/icon.module';
         NgScrollbarModule,
         MenuModule,
         IconModule,
+        NgApexchartsModule
     ],
 })
 export class SharedModule {
