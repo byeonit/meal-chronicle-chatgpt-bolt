@@ -18,34 +18,7 @@ import { Observable } from 'rxjs';
     MatIconModule,
     MatChipsModule
   ],
-  template: `
-  
-    <mat-card appearance="outlined">
-      <mat-card-header>
-        <mat-card-title>Recent Recipes</mat-card-title>
-      </mat-card-header>
-      
-      <mat-card-content>
-        <mat-list>
-          <mat-list-item *ngFor="let recipe of recipes$ | async">
-            <span matListItemTitle>{{ recipe.title || 'Recipe in Progress' }}</span>
-            <span matListItemLine>
-              <mat-chip-set>
-                <mat-chip *ngFor="let ingredient of recipe.ingredients">
-                  {{ ingredient }}
-                </mat-chip>
-              </mat-chip-set>
-            </span>
-            <mat-chip-set>
-              <mat-chip [color]="getStatusColor(recipe.status)" selected>
-                {{ recipe.status }}
-              </mat-chip>
-            </mat-chip-set>
-          </mat-list-item>
-        </mat-list>
-      </mat-card-content>
-    </mat-card>
-  `
+  templateUrl: './recipe-list.component.html',
 })
 export class RecipeListComponent implements OnInit {
   recipes$: Observable<Recipe[]>;
