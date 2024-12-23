@@ -16,6 +16,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDividerModule } from '@angular/material/divider';
 import { RecipeGenerateAlternativeComponent } from './recipe-generate-alternative/recipe-generate-alternative.component';
 import { RecipeFeedbackComponent } from "./recipe-feedback/recipe-feedback.component";
+import { InfoHeaderRecipeComponent } from '../../info-header-recipe/info-header-recipe.component';
 
 @Component({
   selector: 'app-recipe-generator',
@@ -28,46 +29,10 @@ import { RecipeFeedbackComponent } from "./recipe-feedback/recipe-feedback.compo
     MatProgressSpinnerModule,
     MatDividerModule,
     RecipeGenerateAlternativeComponent,
-    RecipeFeedbackComponent
-],
-  template: `
-    <mat-card appearance="outlined" class="recipe-generator-card">
-      <mat-card-header>
-        <mat-card-title>Recipe Generator</mat-card-title>
-        <mat-card-subtitle
-          >Create your perfect recipe by selecting ingredients and
-          preferences</mat-card-subtitle
-        >
-      </mat-card-header>
-      <mat-card-content>
-        <app-recipe-form (generate)="onGenerate($event)"></app-recipe-form>
-        <br />
-        <mat-divider></mat-divider>
-
-        <div *ngIf="loading" class="loading-container">
-          <mat-spinner diameter="40"></mat-spinner>
-          <p class="loading-text">Generating variations...</p>
-        </div>
-
-        <app-recipe-generate [recipe]="recipe" *ngIf="recipe && !loading" />
-      </mat-card-content>
-      <mat-card-footer *ngIf="recipe && !loading">
-        <!-- Generate Variations -->
-        <button mat-raised-button color="accent" (click)="generateVariations()">
-          Generate Variations
-        </button>
-      </mat-card-footer>
-    </mat-card>
-    
-    <app-recipe-feedback [recipe]="recipe" *ngIf="recipe && !loading"/>
-
-    <div *ngIf="loadingVariations" class="loading-container">
-      <mat-spinner diameter="40"></mat-spinner>
-      <p class="loading-text">Generating variations...</p>
-    </div>
-
-    <app-recipe-generate-alternative [recipes]="listOfAlternativeRecipe"/>
-  `,
+    RecipeFeedbackComponent,
+    InfoHeaderRecipeComponent
+  ],
+  templateUrl: './recipe-generator.component.html',
   styles: [
     `
       .recipe-generator-card {

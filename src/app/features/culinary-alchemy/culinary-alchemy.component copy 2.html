@@ -1,0 +1,81 @@
+<form [formGroup]="culinaryForm" (ngSubmit)="onSubmit()">
+<mat-stepper orientation="vertical" style="background-color: white;">
+
+    <mat-step>
+      <ng-template matStepLabel>Ajoutez les ingrédients que vous avez à la maison.</ng-template>
+      <ng-template matStepContent>
+
+        <mat-card >
+            <mat-card-content>
+                <p style="padding-left: 2%; padding-right: 2%;padding-top: 2%;padding-bottom: 2%;">
+                    Vous pouvez choisir des ingrédients dans la liste ou dans votre inventaire enregistré.
+                    N'oubliez pas : si un ingrédient n'est pas disponible dans la liste par défaut, il suffit de taper son nom dans la barre de recherche et de l'ajouter.
+                </p>
+                <hr/>
+                <app-predefines-ingredients-steps1 [selectedIngredients]="selectedIngredients"
+                (selectedIngredientsChange)="onIngredientsChange($event)" />
+        
+
+            </mat-card-content>
+            <hr/>
+            <mat-card-footer class="example-card-footer" >
+                <button mat-button matStepperNext style="width: max-content;">Next</button>
+            </mat-card-footer>
+          </mat-card>
+        
+      </ng-template>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Sélectionnez le repas que vous souhaitez cuisiner.</ng-template>
+      <ng-template matStepContent>
+        <p>
+        <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Recipe Mode</mat-label>
+            <mat-select formControlName="culinaryMode">
+                <mat-option value="all-in-one">All-In-One</mat-option>
+                <mat-option value="gourmet">Gourmet</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </p>
+        <!-- Meal Type -->
+        <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Meal Type</mat-label>
+            <mat-select formControlName="mealType">
+                <mat-option value="breakfast">Breakfast</mat-option>
+                <mat-option value="lunch">Lunch</mat-option>
+                <mat-option value="dinner">Dinner</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- Dietary Preferences -->
+        <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Dietary Preferences</mat-label>
+            <mat-select formControlName="dietaryPreference">
+                <mat-option *ngFor="let preference of dietaryPreferences" [value]="preference">
+                    {{ preference }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- Cuisine Type -->
+        <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Cuisine Type</mat-label>
+            <mat-select formControlName="cuisineType">
+                <mat-option *ngFor="let type of cuisineTypes" [value]="type">
+                    {{ type }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+      </ng-template>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Step 3</ng-template>
+      <p>This content was rendered eagerly</p>
+      <button mat-button matStepperPrevious>Back</button>
+    </mat-step>
+
+  </mat-stepper>
+</form>

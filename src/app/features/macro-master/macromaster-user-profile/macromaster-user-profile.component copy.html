@@ -1,0 +1,39 @@
+<div>
+    <h2>Set Your Macronutrient Goals</h2>
+    
+    <form [formGroup]="macroProfileForm" (ngSubmit)="fetchMacronutrimentRecipeBasedOnGoals()">
+      <div>
+        <label for="proteinGoal">Protein Goal (g):</label>
+        <input id="proteinGoal" formControlName="proteinGoal" type="number" />
+      </div>
+      
+      <div>
+        <label for="carbsGoal">Carbs Goal (g):</label>
+        <input id="carbsGoal" formControlName="carbsGoal" type="number" />
+      </div>
+  
+      <div>
+        <label for="fatsGoal">Fats Goal (g):</label>
+        <input id="fatsGoal" formControlName="fatsGoal" type="number" />
+      </div>
+  
+      <div>
+        <label for="fitnessGoal">Fitness Goal:</label>
+        <select id="fitnessGoal" formControlName="fitnessGoal">
+          <option value="muscle_gaining">Muscle Gaining</option>
+          <option value="weight_loss">Weight Loss</option>
+          <option value="maintenance">Maintenance</option>
+        </select>
+      </div>
+  
+      <div>
+        <label for="targetCalories">Target Calories:</label>
+        <input id="targetCalories" formControlName="targetCalories" type="number" />
+      </div>
+
+      <br/>
+      
+      <button mat-raised-button color="primary" type="submit" [disabled]="macroProfileForm.invalid">Load Recipe</button>
+    </form>
+  </div>
+  

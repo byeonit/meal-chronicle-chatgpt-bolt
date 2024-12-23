@@ -4,11 +4,12 @@ import { OllamaRecipeService } from '../../core/services/ollama/ollama-recipe.se
 import { MealPlanRequest } from '../../core/models/mealplan.model';
 import { MealPlanDisplayComponent } from "./meal-plan-display/meal-plan-display.component";
 import { CommonModule } from '@angular/common';
+import { InfoHeaderMealMasterComponent } from "./info-header-meal-master/info-header-meal-master.component";
 
 @Component({
   selector: 'app-meal-master',
   standalone: true,
-  imports: [CommonModule,MealmasterUserProfileComponent, MealPlanDisplayComponent],
+  imports: [CommonModule, MealmasterUserProfileComponent, MealPlanDisplayComponent, InfoHeaderMealMasterComponent],
   templateUrl: './meal-master.component.html',
   styleUrl: './meal-master.component.css'
 })

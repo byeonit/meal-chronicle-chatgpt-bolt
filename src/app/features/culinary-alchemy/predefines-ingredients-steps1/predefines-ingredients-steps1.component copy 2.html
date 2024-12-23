@@ -1,0 +1,29 @@
+<div class="panel mb-5">
+  <div>
+    <h5 class="text-lg font-semibold dark:text-white-light">Search Ingredients</h5>
+  </div>
+
+  <div class="mt-12">
+    <label >Search </label>
+    <input [(ngModel)]="searchQuery" placeholder="By name" class="form-input " />
+
+    <div *ngFor="let category of categories" >
+
+      <label class="mt-1 inline-flex cursor-pointer items-center">
+        <span class="text-white-dark">
+          <h6>{{ category.category }}</h6>
+        </span>
+      </label>
+      
+      <mat-chip-listbox>
+        <mat-chip-option *ngFor="let ingredient of getFilteredIngredients(category)"
+          [selected]="selectedIngredients.includes(ingredient)" (click)="toggleIngredient(ingredient)" selectable
+          removable>
+          {{ ingredient }}
+        </mat-chip-option>
+      </mat-chip-listbox>
+
+    </div>
+  </div>
+
+</div>
