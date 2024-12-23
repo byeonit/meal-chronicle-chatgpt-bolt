@@ -19,6 +19,7 @@ import { Observable } from 'rxjs';
     MatChipsModule
   ],
   template: `
+  
     <mat-card appearance="outlined">
       <mat-card-header>
         <mat-card-title>Recent Recipes</mat-card-title>
