@@ -69,4 +69,17 @@ export class BoxedSigninComponent {
       this.error = error.message;
     }
   }
+
+  async guestLogin() {
+    try {
+      const user = await this.authService.signInAnonymously();
+      
+      console.log('Guest logged in:', user);
+
+      this.router.navigate(['/']);
+    } catch (error: any) {
+      console.log('Guest Login error :', error);
+      this.error = error.message;
+    }
+  }  
 }

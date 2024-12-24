@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User, sendPasswordResetEmail } from 'firebase/auth';
+import { getAuth, EmailAuthProvider, linkWithCredential, signInAnonymously , onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User, sendPasswordResetEmail } from 'firebase/auth';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private auth = getAuth();
@@ -12,6 +12,7 @@ export class AuthService {
   user$ = this.userSubject.asObservable();
 
   constructor() {
+    // Track auth state changes
     onAuthStateChanged(this.auth, (user) => {
       this.userSubject.next(user);
     });
@@ -51,4 +52,27 @@ export class AuthService {
       .then(() => console.log('Password reset email sent'))
       .catch((error) => console.error('Error resetting password:', error));
   }
+
+  // Sign in anonymously
+  async signInAnonymously(): Promise<User | null> {
+    try {
+      const result = await signInAnonymously(this.auth);
+      return result.user;
+    } catch (error) {
+      console.error('Error signing in anonymously:', error);
+      throw error;
+    }
+  }
+  // Link anonymous account to email/password
+  async linkAnonymousAccount(email: string, password: string): Promise<User | null> {
+    const credential = EmailAuthProvider.credential(email, password);
+    try {
+      const result = await linkWithCredential(this.auth.currentUser!, credential);
+      return result.user;
+    } catch (error) {
+      console.error('Error linking anonymous account:', error);
+      throw error;
+    }
+  }
+
 }
