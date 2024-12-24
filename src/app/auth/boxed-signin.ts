@@ -56,11 +56,6 @@ export class BoxedSigninComponent {
 
   async login() {
     try {
-      console.log("*************************************");
-      console.log("email : " + this.email);
-      console.log("password : " + this.password);
-      console.log("*************************************");
-
       const user = await this.authService.login(this.email, this.password);
       if (user) {
         this.error = null;
