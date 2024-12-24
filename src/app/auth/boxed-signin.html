@@ -52,7 +52,6 @@
                         <p class="text-base font-bold leading-normal text-white-dark">Enter your email and password to
                             login</p>
                     </div>
-                    <!--(submit)="router.navigate(['/'])">-->
                     <form 
                         class="space-y-5 dark:text-white" 
                         (ngSubmit)="login()"
@@ -68,7 +67,7 @@
                                     [(ngModel)]="email"
                                     placeholder="Enter Email"
                                     name="email"
-                                    required                                    
+                                    required
                                     class="form-input ps-10 placeholder:text-white-dark" />
                                 <span class="absolute start-4 top-1/2 -translate-y-1/2">
                                     <icon-mail [fill]="true" />
