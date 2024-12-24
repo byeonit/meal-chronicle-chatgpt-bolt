@@ -5,6 +5,9 @@ import { AppService } from '../service/app.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { toggleAnimation } from 'src/app/shared/animations';
+import { AuthService } from '../auth/services/firebase/auth.service';
+import { User } from 'firebase/auth';
+import { Observable } from 'rxjs';
 
 @Component({
     moduleId: module.id,
@@ -13,6 +16,7 @@ import { toggleAnimation } from 'src/app/shared/animations';
     animations: [toggleAnimation],
 })
 export class HeaderComponent {
+    user$: Observable<User | null>; // Declare user$ as an Observable
     store: any;
     search = false;
     notifications = [
@@ -80,10 +84,13 @@ export class HeaderComponent {
         public router: Router,
         private appSetting: AppService,
         private sanitizer: DomSanitizer,
+        private authService: AuthService
     ) {
+        this.user$ = this.authService.user$;
         this.initStore();
     }
     async initStore() {
+        
         this.storeData
             .select((d) => d.index)
             .subscribe((d) => {
@@ -138,5 +145,10 @@ export class HeaderComponent {
             this.storeData.dispatch({ type: 'toggleRTL', payload: 'ltr' });
         }
         window.location.reload();
+    }
+
+    async logout() {
+        await this.authService.logout();
+        //this.user$ = null;
     }
 }

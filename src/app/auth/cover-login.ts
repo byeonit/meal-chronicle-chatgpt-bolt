@@ -4,12 +4,16 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/service/app.service';
+import { AuthService } from './services/firebase/auth.service';
 
 @Component({
     templateUrl: './cover-login.html',
     animations: [toggleAnimation],
 })
 export class CoverLoginComponent {
+    public email = '';
+    public password = '';
+  
     store: any;
     currYear: number = new Date().getFullYear();
     constructor(
@@ -17,6 +21,7 @@ export class CoverLoginComponent {
         public storeData: Store<any>,
         public router: Router,
         private appSetting: AppService,
+        private authService: AuthService,
     ) {
         this.initStore();
     }
@@ -38,4 +43,20 @@ export class CoverLoginComponent {
         }
         window.location.reload();
     }
+
+    async login() {
+        try {
+          const user = await this.authService.login(this.email, this.password);
+          if (user) {
+            //this.error = null;
+            console.log('User logged in:', user);
+    
+            // Redirect to dashboard
+            this.router.navigate(['/']);
+          }
+        } catch (error: any) {
+          console.log('User error :', error);
+          //this.error = error.message;
+        }
+      }
 }
