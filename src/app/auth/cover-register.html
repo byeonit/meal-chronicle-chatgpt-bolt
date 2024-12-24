@@ -81,11 +81,19 @@
                         <h1 class="text-3xl font-extrabold uppercase !leading-snug text-primary md:text-4xl">Sign Up</h1>
                         <p class="text-base font-bold leading-normal text-white-dark">Enter your email and password to register</p>
                     </div>
-                    <form class="space-y-5 dark:text-white" (submit)="router.navigate(['/'])">
+                    <form 
+                        class="space-y-5 dark:text-white" 
+                        (ngSubmit)="register()" 
+                        #registerForm="ngForm"
+                        >
                         <div>
                             <label for="Name">Name</label>
                             <div class="relative text-white-dark">
-                                <input id="Name" type="text" placeholder="Enter Name" class="form-input ps-10 placeholder:text-white-dark" />
+                                <input 
+                                    id="Name" 
+                                    type="text" 
+                                    placeholder="Enter Name" 
+                                    class="form-input ps-10 placeholder:text-white-dark" />
                                 <span class="absolute start-4 top-1/2 -translate-y-1/2">
                                     <icon-user [fill]="true" />
                                 </span>
@@ -94,7 +102,14 @@
                         <div>
                             <label for="Email">Email</label>
                             <div class="relative text-white-dark">
-                                <input id="Email" type="email" placeholder="Enter Email" class="form-input ps-10 placeholder:text-white-dark" />
+                                <input 
+                                    id="Email" 
+                                    type="email" 
+                                    [(ngModel)]="email"
+                                    name="email"
+                                    required                                    
+                                    placeholder="Enter Email" 
+                                    class="form-input ps-10 placeholder:text-white-dark" />
                                 <span class="absolute start-4 top-1/2 -translate-y-1/2">
                                     <icon-mail [fill]="true" />
                                 </span>
@@ -103,7 +118,14 @@
                         <div>
                             <label for="Password">Password</label>
                             <div class="relative text-white-dark">
-                                <input id="Password" type="password" placeholder="Enter Password" class="form-input ps-10 placeholder:text-white-dark" />
+                                <input 
+                                    id="Password" 
+                                    placeholder="Enter Password" 
+                                    [(ngModel)]="password"
+                                    name="password"
+                                    required
+                                    minlength="6"                                    
+                                    class="form-input ps-10 placeholder:text-white-dark" />
                                 <span class="absolute start-4 top-1/2 -translate-y-1/2">
                                     <icon-lock-dots [fill]="true" />
                                 </span>

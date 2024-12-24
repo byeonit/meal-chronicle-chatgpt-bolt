@@ -4,12 +4,16 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/service/app.service';
+import { AuthService } from './services/firebase/auth.service';
 
 @Component({
     templateUrl: './cover-register.html',
     animations: [toggleAnimation],
 })
 export class CoverRegisterComponent {
+    email = '';
+    password = '';
+
     store: any;
     currYear: number = new Date().getFullYear();
     constructor(
@@ -17,6 +21,7 @@ export class CoverRegisterComponent {
         public storeData: Store<any>,
         public router: Router,
         private appSetting: AppService,
+        private authService: AuthService
     ) {
         this.initStore();
     }
@@ -37,5 +42,16 @@ export class CoverRegisterComponent {
             this.storeData.dispatch({ type: 'toggleRTL', payload: 'ltr' });
         }
         window.location.reload();
+    }
+    
+    async register() {
+        const user = await this.authService.register(this.email, this.password);
+        if (!user) {            
+          //this.error = 'Registration failed. Please try again.';
+        } else {
+          //this.error = null;
+          this.router.navigate(['/auth/cover-login']);
+          console.log('User registered:', user);
+        }
     }
 }
