@@ -23,13 +23,14 @@
     "@ngrx/store": "^18.0.2",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
+    "apexcharts": "^3.49.2",
+    "firebase": "^11.1.0",
     "headlessui-angular": "^0.0.9",
+    "ng-apexcharts": "^1.11.0",
     "ngx-scrollbar": "^15.1.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.5.2",
-    "zone.js": "~0.14.4",
-    "apexcharts": "^3.49.2",
-    "ng-apexcharts": "^1.11.0"
+    "zone.js": "~0.14.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.2.0",
