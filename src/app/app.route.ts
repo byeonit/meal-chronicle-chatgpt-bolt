@@ -50,8 +50,14 @@ export const routes: Routes = [
     },
 
     {
-        path: '',
-        component: AuthLayout,
-        children: [],
-    },
+      path: '',
+      component: AuthLayout,
+      children: [
+          // pages
+          { path: '', loadChildren: () => import('./pages/pages.module').then((d) => d.PagesModule) },
+
+          // auth
+          { path: '', loadChildren: () => import('./auth/auth.module').then((d) => d.AuthModule) },
+      ],
+  },
 ];

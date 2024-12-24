@@ -114,6 +114,54 @@
                         </ul>
                     </li>
 
+                    <li class="accordion menu nav-item">
+                        <button
+                            type="button"
+                            class="nav-link group w-full"
+                            [ngClass]="{ active: activeDropdown.includes('authentication') }"
+                            (click)="toggleAccordion('authentication')"
+                        >
+                            <div class="flex items-center">
+                                <icon-menu-authentication class="shrink-0 group-hover:!text-primary" />
+
+                                <span class="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3"
+                                    >{{ 'authentication' | translate }}</span
+                                >
+                            </div>
+                            <div [ngClass]="{ 'rtl:rotate-90 -rotate-90': !activeDropdown.includes('authentication') }">
+                                <icon-caret-down />
+                            </div>
+                        </button>
+                        <div [@slideDownUp]="!activeDropdown.includes('authentication')" class="accordion-content">
+                            <ul class="sub-menu text-gray-500">
+                                <li routerLinkActive="active" (click)="toggleMobileMenu()">
+                                    <a routerLink="/auth/boxed-signin" target="_blank">{{ 'login_boxed' | translate }}</a>
+                                </li>
+                                <li routerLinkActive="active" (click)="toggleMobileMenu()">
+                                    <a routerLink="/auth/boxed-signup" target="_blank">{{ 'register_boxed' | translate }}</a>
+                                </li>
+                                <li routerLinkActive="active" (click)="toggleMobileMenu()">
+                                    <a routerLink="/auth/boxed-lockscreen" target="_blank">{{ 'unlock_boxed' | translate }}</a>
+                                </li>
+                                <li routerLinkActive="active" (click)="toggleMobileMenu()">
+                                    <a routerLink="/auth/boxed-password-reset" target="_blank">{{ 'recover_id_boxed' | translate }}</a>
+                                </li>
+                                <li routerLinkActive="active" (click)="toggleMobileMenu()">
+                                    <a routerLink="/auth/cover-login" target="_blank">{{ 'login_cover' | translate }}</a>
+                                </li>
+                                <li routerLinkActive="active" (click)="toggleMobileMenu()">
+                                    <a routerLink="/auth/cover-register" target="_blank">{{ 'register_cover' | translate }}</a>
+                                </li>
+                                <li routerLinkActive="active" (click)="toggleMobileMenu()">
+                                    <a routerLink="/auth/cover-lockscreen" target="_blank">{{ 'unlock_cover' | translate }}</a>
+                                </li>
+                                <li routerLinkActive="active" (click)="toggleMobileMenu()">
+                                    <a routerLink="/auth/cover-password-reset" target="_blank">{{ 'recover_id_cover' | translate }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
                 </ul>
             </ng-scrollbar>
         </div>
