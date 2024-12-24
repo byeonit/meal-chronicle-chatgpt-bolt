@@ -72,14 +72,8 @@
                         <div>
                             <label for="Email">Email</label>
                             <div class="relative text-white-dark">
-                                <input 
-                                    id="email" 
-                                    type="email" 
-                                    [(ngModel)]="email"
-                                    placeholder="Enter Email"
-                                    name="email"
-                                    required
-                                    class="form-input ps-10 placeholder:text-white-dark" />
+                                <input id="email" type="email" [(ngModel)]="email" placeholder="Enter Email"
+                                    name="email" required class="form-input ps-10 placeholder:text-white-dark" />
                                 <span class="absolute start-4 top-1/2 -translate-y-1/2">
                                     <icon-mail [fill]="true" />
                                 </span>
@@ -88,14 +82,8 @@
                         <div>
                             <label for="password">Password</label>
                             <div class="relative text-white-dark">
-                                <input 
-                                    id="password" 
-                                    type="password" 
-                                    placeholder="Enter Password"
-                                    [(ngModel)]="password"
-                                    name="password"
-                                    required
-                                    class="form-input ps-10 placeholder:text-white-dark" />
+                                <input id="password" type="password" placeholder="Enter Password" [(ngModel)]="password"
+                                    name="password" required class="form-input ps-10 placeholder:text-white-dark" />
                                 <span class="absolute start-4 top-1/2 -translate-y-1/2">
                                     <icon-lock-dots [fill]="true" />
                                 </span>
@@ -145,12 +133,30 @@
                             <li>
                                 <a href="javascript:"
                                     class="inline-flex h-8 w-8 items-center justify-center rounded-full p-0 transition hover:scale-110"
-                                    style="background: linear-gradient(135deg, rgba(239, 18, 98, 1) 0%, rgba(67, 97, 238, 1) 100%)">
+                                    style="background: linear-gradient(135deg, #ef1262 0%, rgba(67, 97, 238, 1) 100%)">
                                     <icon-google />
                                 </a>
                             </li>
                         </ul>
                     </div>
+
+                    <div class="relative my-7 text-center md:mb-9">
+                        <span
+                            class="absolute inset-x-0 top-1/2 h-px w-full -translate-y-1/2 bg-white-light dark:bg-white-dark"></span>
+                        <span
+                            class="relative bg-white px-2 font-bold uppercase text-white-dark dark:bg-dark dark:text-white-light">
+                            Just want to try
+                        </span>
+                    </div>
+
+                    <button 
+                        type="submit"
+                        (click)="guestLogin()"
+                        class="btn bg-white-light !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
+                        Continue as Guest
+                    </button>
+                    <br/>
+                    <br/>
                     <div class="text-center dark:text-white">
                         Don't have an account ?
                         <a routerLink="/auth/cover-register"
@@ -158,6 +164,7 @@
                             SIGN UP
                         </a>
                     </div>
+
                 </div>
                 <p class="absolute bottom-6 w-full text-center dark:text-white">© {{ currYear }}.VRISTO All Rights
                     Reserved.</p>
