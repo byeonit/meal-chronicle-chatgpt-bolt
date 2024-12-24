@@ -33,11 +33,15 @@ const routes: Routes = [
     { path: 'auth/cover-register', component: CoverRegisterComponent, data: { title: 'Cover Register' } },
 ];
 @NgModule({
-    imports: [RouterModule.forChild(routes), CommonModule, SharedModule.forRoot()],
+    imports: [
+        RouterModule.forChild(routes), 
+        CommonModule, 
+        SharedModule.forRoot(),
+        BoxedSigninComponent,
+    ],
     declarations: [
         BoxedLockscreenComponent,
-        BoxedPasswordResetComponent,
-        BoxedSigninComponent,
+        BoxedPasswordResetComponent,        
         BoxedSignupComponent,
         CoverLockscreenComponent,
         CoverLoginComponent,

@@ -8,17 +8,7 @@ import { CulinaryAlchemyRoutingModule } from './features/culinary-alchemy/culina
 import { KnowledgeBaseComponent } from './pages/knowledge-base/knowledge-base.component';
 
 export const routes: Routes = [
-    /*{
-        path: '',
-        redirectTo: 'recipes',
-        pathMatch: 'full'
-      },
-      {
-        path: 'recipes',
-        loadChildren: () => 
-          import('./features/recipe/recipe.routes')
-            .then(m => m.RECIPE_ROUTES)
-      },*/
+
     {
         path: '',
         component: AppLayout,
